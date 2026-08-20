@@ -29,8 +29,6 @@
             --dorado: #c9a86a;
             --dorado-claro: #ead7ad;
             --texto: #6e5960;
-            --code-bg: #2d2226;
-            --code-text: #f3a0b5;
             --sombra: 0 15px 35px rgba(180, 112, 132, 0.18);
         }
 
@@ -109,12 +107,6 @@
             50% {
                 opacity: 0.4;
             }
-        }
-
-        /* ===== TERMINAL OCULTA (solo para mantener estructura) ===== */
-        .terminal-wrapper {
-            display: none;
-            /* Oculto completamente */;
         }
 
         /* ===== HERO con A estilizada ===== */
@@ -541,9 +533,6 @@
                 <span id="visitCount">1</span> personas han visto la invitación
             </div>
 
-            <!-- Terminal oculta (no se muestra) -->
-            <div class="terminal-wrapper" style="display:none;"></div>
-
             <div class="baby-icon">
                 <i class="fa-solid fa-baby"></i>
             </div>
@@ -608,7 +597,7 @@
         </a>
     </section>
 
-    <!-- ===== CATÁLOGO DE REGALOS (MÁS DE 20 OPCIONES) ===== -->
+    <!-- ===== CATÁLOGO DE REGALOS ===== -->
     <section class="card gift-card reveal delay-3">
         <div class="section-heading">
             <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
@@ -617,7 +606,7 @@
         </div>
 
         <div class="gift-list" id="giftList">
-            <!-- Los regalos se generarán con JavaScript para mantener el HTML limpio -->
+            <!-- Los regalos se generan con JavaScript -->
         </div>
 
         <!-- YAPE -->
@@ -899,7 +888,6 @@
         } catch (e) { /* silencio */ }
     }
 
-    // Marcar regalos como elegidos localmente
     let selectedGifts = JSON.parse(localStorage.getItem('adara_selected_gifts') || '[]');
 
     document.querySelectorAll('.btn-select').forEach(btn => {
@@ -914,35 +902,28 @@
             e.stopPropagation();
             const gift = this.getAttribute('data-gift');
 
-            // Evitar doble selección
             if (this.classList.contains('elegido')) return;
 
-            // Confeti
             if (typeof confetti === 'function') {
                 confetti({ particleCount: 70, spread: 90, origin: { y: 0.4 } });
                 setTimeout(() => confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } }), 200);
                 setTimeout(() => confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } }), 400);
             }
 
-            // Sonido cuna
             playLullaby();
 
-            // Estrellitas extra
             const rect = this.getBoundingClientRect();
             createStars(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
 
-            // Marcar como elegido
             this.textContent = '✓ Elegido';
             this.classList.add('elegido');
             this.disabled = true;
 
-            // Guardar en localStorage
             if (!selectedGifts.includes(gift)) {
                 selectedGifts.push(gift);
                 localStorage.setItem('adara_selected_gifts', JSON.stringify(selectedGifts));
             }
 
-            // Mensaje WhatsApp
             const msg = encodeURIComponent(`¡Hola Heiner y Loedir! 👋 Me encantaría regalarles para Adara Bela: ${gift}`);
             setTimeout(() => {
                 window.open(`https://wa.me/51903051441?text=${msg}`, '_blank');
