@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower · Adara Bela ✨</title>
 
-    <title>Baby Shower de Adara Bela</title>
-
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Iconos -->
+    <!-- Fuentes y Librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-    <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --rosa: #f7c9d4;
             --rosa-claro: #fff1f5;
@@ -26,183 +27,139 @@
             --dorado: #c9a86a;
             --dorado-claro: #ead7ad;
             --texto: #6e5960;
-            --sombra: 0 15px 40px rgba(180, 112, 132, 0.16);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --sombra: 0 20px 45px rgba(180, 112, 132, 0.20);
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
             color: var(--texto);
             min-height: 100vh;
+            background: radial-gradient(circle at 10% 20%, rgba(247, 201, 212, 0.35), transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(234, 215, 173, 0.30), transparent 35%),
+                        var(--crema);
             overflow-x: hidden;
-
-            background:
-                radial-gradient(circle at top left, rgba(247, 201, 212, 0.45), transparent 35%),
-                radial-gradient(circle at bottom right, rgba(234, 215, 173, 0.30), transparent 30%),
-                var(--crema);
         }
 
-        /* FORMAS DECORATIVAS */
-        .floating-shape {
+        /* Fondo animado con burbujas */
+        .bubbles {
             position: fixed;
-            border-radius: 50%;
-            opacity: 0.35;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             pointer-events: none;
-            z-index: -1;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .shape-1 {
-            width: 140px;
-            height: 140px;
-            background: #f8cdd7;
-            top: 5%;
-            left: -55px;
-        }
-
-        .shape-2 {
-            width: 180px;
-            height: 180px;
-            background: #f4e2bc;
-            bottom: 5%;
-            right: -75px;
-            animation-delay: -3s;
-        }
-
-        .shape-3 {
-            width: 80px;
-            height: 80px;
-            background: #f3bfcf;
-            top: 50%;
-            right: 8%;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-18px) rotate(8deg);
-            }
-        }
-
-        /* CONTENEDOR */
-        .container {
-            width: min(92%, 650px);
-            margin: 0 auto;
-            padding: 25px 0 50px;
-        }
-
-        /* PORTADA */
-        .hero {
-            position: relative;
-            text-align: center;
-            padding: 40px 20px 30px;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: "♡";
+        .bubble {
             position: absolute;
-            font-size: 260px;
-            color: rgba(255, 255, 255, 0.45);
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
+            bottom: -80px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.8);
+            animation: rise linear infinite;
         }
 
-        .tiny-title {
-            color: var(--dorado);
-            text-transform: uppercase;
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0.6; }
+            100% { transform: translateY(-110vh) scale(1.2) rotate(720deg); opacity: 0.1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: min(94%, 680px);
+            margin: 0 auto;
+            padding: 20px 0 40px;
+        }
+
+        /* Tarjetas con efecto vidrio y animación */
+        .card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 32px;
+            padding: 28px 22px;
+            margin: 26px 0;
+            box-shadow: var(--sombra), 0 0 0 1px rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 30px 55px rgba(180, 112, 132, 0.25);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 35px 10px 25px;
+            position: relative;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), transparent 60%);
         }
 
         .baby-icon {
-            width: 88px;
-            height: 88px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 15px;
             border-radius: 50%;
-
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(145deg, #ffffff, #fce7ed);
+            border: 3px solid var(--dorado-claro);
+            box-shadow: 0 0 0 8px rgba(247, 201, 212, 0.3), var(--sombra);
+            animation: floatIcon 3s ease-in-out infinite;
+        }
 
-            background: linear-gradient(135deg, #ffffff, #fce7ed);
-            border: 2px solid var(--dorado-claro);
-            box-shadow: var(--sombra);
-
-            animation: pulse 2.5s infinite;
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
         .baby-icon i {
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             color: var(--rosa-oscuro);
+            animation: pulseIcon 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.06);
-            }
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: clamp(4rem, 15vw, 6.5rem);
+            font-size: clamp(4.5rem, 16vw, 7rem);
             line-height: 0.9;
-            font-weight: 400;
+            text-shadow: 0 5px 25px rgba(201, 119, 141, 0.2);
+            margin-top: 5px;
         }
 
         .subtitle {
-            margin-top: 18px;
             font-family: 'Playfair Display', serif;
             color: #a98463;
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-top: 15px;
         }
 
         .parents {
-            margin-top: 20px;
             display: inline-block;
-            padding: 11px 22px;
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(201, 168, 106, 0.35);
-            border-radius: 50px;
-            font-size: 0.86rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            margin-top: 20px;
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(201, 168, 106, 0.4);
+            border-radius: 60px;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            backdrop-filter: blur(4px);
         }
 
         .parents strong {
             color: var(--rosa-oscuro);
-        }
-
-        /* TARJETAS */
-        .card {
-            background: rgba(255, 255, 255, 0.90);
-            border-radius: 28px;
-            padding: 26px 20px;
-            margin: 22px 0;
-            box-shadow: var(--sombra);
-            border: 1px solid rgba(255, 255, 255, 0.95);
         }
 
         .section-heading {
@@ -211,64 +168,70 @@
         }
 
         .icon-circle {
-            width: 52px;
-            height: 52px;
-            margin: 0 auto 10px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 12px;
             border-radius: 50%;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: #fff5f7;
+            background: linear-gradient(135deg, #fff5f7, #fde8ef);
             color: var(--rosa-oscuro);
             border: 1px solid #f7d5de;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(201, 119, 141, 0.15);
         }
 
         .section-heading h2 {
             font-family: 'Playfair Display', serif;
             color: #98745a;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
         }
 
         .section-heading p {
-            margin-top: 7px;
-            font-size: 0.85rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            color: #7f6a70;
         }
 
-        /* CUENTA REGRESIVA */
+        /* Countdown */
         .countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 12px;
         }
 
         .count-box {
-            background: linear-gradient(180deg, #fffafa, #fff4f6);
-            border: 1px solid #f6dce3;
-            border-radius: 18px;
-            padding: 15px 5px;
+            background: linear-gradient(145deg, #ffffff, #fff4f7);
+            border-radius: 22px;
+            padding: 18px 5px;
             text-align: center;
+            border: 1px solid #f6dce3;
+            box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.8), 0 8px 18px rgba(201, 119, 141, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .count-box:hover {
+            transform: translateY(-4px);
         }
 
         .count-box span {
             display: block;
             color: var(--rosa-oscuro);
             font-weight: 800;
-            font-size: clamp(1.4rem, 6vw, 2rem);
+            font-size: clamp(1.8rem, 7vw, 2.6rem);
+            letter-spacing: 1px;
         }
 
         .count-box small {
             display: block;
-            margin-top: 5px;
-            font-size: 0.6rem;
+            margin-top: 6px;
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #9b7d86;
+            letter-spacing: 2px;
+            color: #a8848d;
         }
 
-        /* INFORMACIÓN */
+        /* Info */
         .event-info {
             display: grid;
             gap: 14px;
@@ -277,711 +240,419 @@
         .info-item {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 15px;
-            background: #fffaf8;
-            border-radius: 18px;
+            gap: 16px;
+            padding: 16px 18px;
+            background: rgba(255, 250, 248, 0.7);
+            border-radius: 20px;
             border: 1px solid #f5e6dc;
+            transition: background 0.2s;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 245, 240, 0.9);
         }
 
         .info-icon {
-            min-width: 48px;
-            height: 48px;
-            border-radius: 15px;
-
+            min-width: 52px;
+            height: 52px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: linear-gradient(135deg, #fbe0e6, #fff3e5);
+            background: linear-gradient(145deg, #fbe0e6, #fff3e5);
             color: var(--rosa-oscuro);
+            font-size: 1.3rem;
         }
 
         .info-item strong {
             display: block;
             color: #876970;
-            font-size: 0.87rem;
+            font-size: 0.9rem;
             margin-bottom: 4px;
         }
 
         .info-item span {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             line-height: 1.5;
         }
 
-        /* BOTONES */
+        /* Mapa */
+        .map-container {
+            margin: 18px 0 10px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            height: 220px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Botones */
         .btn {
             width: 100%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-
-            padding: 16px 18px;
-            margin-top: 15px;
-
+            gap: 12px;
+            padding: 16px 20px;
+            margin-top: 16px;
             border: none;
-            border-radius: 16px;
-
+            border-radius: 18px;
             cursor: pointer;
-            text-decoration: none;
-
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 0.9rem;
-
-            transition: 0.25s;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.10);
         }
-
-        .btn:active {
-            transform: scale(0.97);
-        }
+        .btn:active { transform: scale(0.96); }
 
         .btn-map {
             color: white;
-            background: linear-gradient(135deg, #d98b9f, #c9778d);
-            box-shadow: 0 10px 22px rgba(201, 119, 141, 0.25);
+            background: linear-gradient(145deg, #d98b9f, #c9778d);
+            box-shadow: 0 10px 25px rgba(201, 119, 141, 0.30);
         }
 
         .btn-gift {
             color: #856338;
-            background: linear-gradient(135deg, #f6e6bd, #e9cf91);
-            box-shadow: 0 10px 22px rgba(201, 168, 106, 0.20);
+            background: linear-gradient(145deg, #f6e6bd, #e9cf91);
+            box-shadow: 0 10px 25px rgba(201, 168, 106, 0.25);
         }
 
-        /* CARIÑITO */
+        /* Yape */
         .gift-card {
             text-align: center;
-            background:
-                radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 45%),
-                linear-gradient(145deg, #fff9f1, #fff2f5);
+            background: radial-gradient(circle at 20% 30%, rgba(255, 245, 235, 0.9), rgba(255, 242, 245, 0.8));
         }
 
         .gift-card h2 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: 2.8rem;
+            font-size: 3rem;
             font-weight: 400;
-            margin-bottom: 12px;
-        }
-
-        .gift-card p {
-            font-size: 0.88rem;
-            line-height: 1.7;
+            margin-bottom: 10px;
         }
 
         .yape-box {
             margin: 22px auto 8px;
-            padding: 18px;
-            max-width: 390px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.88);
-            border: 1px dashed var(--dorado);
+            padding: 22px 15px;
+            max-width: 380px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px dashed var(--dorado);
+            box-shadow: 0 8px 25px rgba(201, 168, 106, 0.15);
         }
 
         .yape-label {
-            font-size: 0.73rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--dorado);
             font-weight: 800;
         }
 
         .yape-number {
-            margin-top: 8px;
-            font-size: clamp(1.6rem, 7vw, 2.1rem);
+            margin-top: 10px;
+            font-size: clamp(1.8rem, 8vw, 2.4rem);
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: #80616a;
         }
 
         .copy-message {
-            min-height: 20px;
-            margin-top: 10px;
+            min-height: 24px;
+            margin-top: 12px;
             color: #a8844f;
-            font-size: 0.78rem;
             font-weight: 600;
+            font-size: 0.85rem;
         }
 
-        /* FINAL */
+        /* Footer */
         .confirmation {
             text-align: center;
-            background: linear-gradient(135deg, #f9dce3, #fff8ed);
+            background: linear-gradient(145deg, #f9dce3, #fff8ed);
         }
 
         .confirmation h3 {
             font-family: 'Playfair Display', serif;
             color: var(--rosa-oscuro);
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
-        }
-
-        .confirmation p {
-            font-size: 0.85rem;
-            line-height: 1.7;
         }
 
         footer {
             text-align: center;
-            padding: 15px 10px;
-            font-size: 0.75rem;
+            padding: 20px 10px 10px;
+            font-size: 0.8rem;
             color: #a68b92;
+            opacity: 0.8;
         }
 
         .heart {
             color: var(--rosa-oscuro);
             display: inline-block;
-            animation: heartbeat 1.4s infinite;
+            animation: heartbeat 1.5s infinite;
         }
 
         @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.3);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.4); }
         }
 
-        /* ANIMACIÓN DE ENTRADA */
+        /* Animación reveal */
         .reveal {
             opacity: 0;
-            transform: translateY(25px);
-            animation: reveal 0.8s forwards;
+            transform: translateY(30px);
+            animation: reveal 0.9s forwards;
         }
-
-        .delay-1 { animation-delay: 0.15s; }
-        .delay-2 { animation-delay: 0.30s; }
-        .delay-3 { animation-delay: 0.45s; }
-        .delay-4 { animation-delay: 0.60s; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.40s; }
+        .delay-4 { animation-delay: 0.55s; }
+        .delay-5 { animation-delay: 0.70s; }
 
         @keyframes reveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* CELULARES */
-        @media (max-width: 420px) {
-            .container {
-                width: 94%;
-                padding-top: 15px;
-            }
-
-            .hero {
-                padding: 30px 8px 22px;
-            }
-
-            .card {
-                padding: 22px 15px;
-                border-radius: 23px;
-            }
-
-            .countdown {
-                gap: 7px;
-            }
-
-            .count-box {
-                padding: 13px 3px;
-                border-radius: 14px;
-            }
+        @media (max-width: 480px) {
+            .card { padding: 20px 14px; }
+            .countdown { gap: 6px; }
+            .count-box { padding: 12px 2px; }
+            .map-container { height: 170px; }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- FORMAS DECORATIVAS -->
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
-    <div class="floating-shape shape-3"></div>
+    <!-- Burbujas decorativas -->
+    <div class="bubbles" id="bubbleContainer"></div>
 
     <main class="container">
 
         <!-- PORTADA -->
-        <section class="hero reveal">
-
+        <section class="card hero reveal">
             <div class="baby-icon">
                 <i class="fa-solid fa-baby"></i>
             </div>
-
-            <p class="tiny-title">
-                Muy pronto llegará una hermosa princesa
+            <p class="tiny-title" style="color:var(--dorado); text-transform:uppercase; font-size:0.75rem; font-weight:800; letter-spacing:3px; margin-bottom:8px;">
+                ♡ Muy pronto llegará una princesa ♡
             </p>
-
             <h1>Adara Bela</h1>
-
             <p class="subtitle">
-                Hay pequeños milagros que llegan para llenar
-                <br>
+                Pequeños milagros que llegan para llenar<br>
                 el mundo de amor, ternura y felicidad.
             </p>
-
             <div class="parents">
-                Con mucho amor,
-                <strong>Heiner y Loedir</strong>
-                te invitan a celebrar
+                Con mucho amor, <strong>Heiner y Loedir</strong> te invitan a celebrar
             </div>
-
         </section>
-
 
         <!-- CUENTA REGRESIVA -->
         <section class="card reveal delay-1">
-
             <div class="section-heading">
-                <div class="icon-circle">
-                    <i class="fa-regular fa-clock"></i>
-                </div>
-
+                <div class="icon-circle"><i class="fa-regular fa-clock"></i></div>
                 <h2>La cuenta regresiva</h2>
-
                 <p>Falta muy poquito para celebrar juntos.</p>
             </div>
-
             <div class="countdown">
-
-                <div class="count-box">
-                    <span id="days">00</span>
-                    <small>Días</small>
-                </div>
-
-                <div class="count-box">
-                    <span id="hours">00</span>
-                    <small>Horas</small>
-                </div>
-
-                <div class="count-box">
-                    <span id="minutes">00</span>
-                    <small>Minutos</small>
-                </div>
-
-                <div class="count-box">
-                    <span id="seconds">00</span>
-                    <small>Segundos</small>
-                </div>
-
+                <div class="count-box"><span id="days">00</span><small>Días</small></div>
+                <div class="count-box"><span id="hours">00</span><small>Horas</small></div>
+                <div class="count-box"><span id="minutes">00</span><small>Minutos</small></div>
+                <div class="count-box"><span id="seconds">00</span><small>Segundos</small></div>
             </div>
-
         </section>
 
-
-        <!-- INFORMACIÓN -->
+        <!-- INFORMACIÓN + MAPA -->
         <section class="card reveal delay-2">
-
             <div class="section-heading">
-
-                <div class="icon-circle">
-                    <i class="fa-solid fa-calendar-heart"></i>
-                </div>
-
+                <div class="icon-circle"><i class="fa-solid fa-calendar-heart"></i></div>
                 <h2>Reserva esta fecha</h2>
-
-                <p>
-                    Queremos compartir contigo este momento tan especial.
-                </p>
-
+                <p>Queremos compartir este momento tan especial contigo.</p>
             </div>
-
 
             <div class="event-info">
-
                 <div class="info-item">
-
-                    <div class="info-icon">
-                        <i class="fa-solid fa-calendar-day"></i>
-                    </div>
-
-                    <div>
-                        <strong>Fecha</strong>
-                        <span>Domingo, 23 de Agosto de 2026</span>
-                    </div>
-
+                    <div class="info-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                    <div><strong>Fecha</strong><span>Domingo, 23 de Agosto de 2026</span></div>
                 </div>
-
-
                 <div class="info-item">
-
-                    <div class="info-icon">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-
-                    <div>
-                        <strong>Hora</strong>
-                        <span>6:00 PM</span>
-                    </div>
-
+                    <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div><strong>Hora</strong><span>6:00 PM</span></div>
                 </div>
-
-
                 <div class="info-item">
-
-                    <div class="info-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-
-                    <div>
-                        <strong>Ubicación</strong>
-
-                        <span>
-                            Presiona el botón para abrir
-                            directamente la ubicación.
-                        </span>
-                    </div>
-
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div><strong>Ubicación</strong><span>Residencial Sumaq Wasi · Cusco</span></div>
                 </div>
-
             </div>
 
+            <!-- MAPA EMBEBIDO (Google Maps) -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3882.8328464717314!2d-71.90393208465252!3d-13.542140490226942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x916e7f001d2ab971%3A0xe87850b0ec331171!2sResidencial%20Sumaq%20Wasi!5e0!3m2!1ses!2spe!4v1742420000000!5m2!1ses!2spe" 
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
 
-            <!-- GOOGLE MAPS -->
-            <a
-                href="https://maps.app.goo.gl/GwmkPtPJNDyGUvKK7?g_st=iwb"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-map"
-            >
-                <i class="fa-solid fa-map-location-dot"></i>
-                Ver ubicación en Google Maps
+            <a href="https://www.google.com/maps/place/Residencial+Sumaq+Wasi/@-13.5421405,-71.9013434,17z/data=!3m1!4b1!4m6!3m5!1s0x916e7f001d2ab971:0xe87850b0ec331171!8m2!3d-13.5421405!4d-71.9013434!16s%2Fg%2F11njxkh4k4!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="btn btn-map">
+                <i class="fa-solid fa-map-location-dot"></i> Abrir en Google Maps
             </a>
-
         </section>
-
 
         <!-- YAPE -->
         <section class="card gift-card reveal delay-3">
-
             <div class="section-heading">
-                <div class="icon-circle">
-                    <i class="fa-solid fa-gift"></i>
-                </div>
+                <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
             </div>
-
             <h2>Un Cariñito para Adara</h2>
-
-            <p>
-                Tu presencia será el regalo más hermoso.
-                Pero si deseas acompañarnos con un pequeño detalle
-                para nuestra princesa, puedes hacerlo con mucho amor.
-            </p>
-
+            <p>Tu presencia es el mejor regalo. Si deseas acompañarnos con un detalle para nuestra princesa, puedes hacerlo con mucho amor.</p>
 
             <div class="yape-box">
-
-                <div class="yape-label">
-                    <i class="fa-solid fa-heart"></i>
-                    Yape
-                </div>
-
-                <div class="yape-number" id="yapeNumber">
-                    903051441
-                </div>
-
-
-                <button
-                    class="btn btn-gift"
-                    id="copyYape"
-                    type="button"
-                >
-                    <i class="fa-regular fa-copy"></i>
-                    Copiar número de Yape
+                <div class="yape-label"><i class="fa-solid fa-heart"></i> Yape</div>
+                <div class="yape-number" id="yapeNumber">903051441</div>
+                <button class="btn btn-gift" id="copyYape" type="button">
+                    <i class="fa-regular fa-copy"></i> Copiar número
                 </button>
-
-
-                <div
-                    class="copy-message"
-                    id="copyMessage"
-                ></div>
-
+                <div class="copy-message" id="copyMessage"></div>
             </div>
-
         </section>
 
-
-        <!-- MENSAJE FINAL -->
+        <!-- CIERRE -->
         <section class="card confirmation reveal delay-4">
-
-            <div
-                class="baby-icon"
-                style="width:70px;height:70px;margin-bottom:15px;"
-            >
-                <i
-                    class="fa-solid fa-heart"
-                    style="font-size:1.8rem;"
-                ></i>
+            <div class="baby-icon" style="width:80px;height:80px;margin:0 auto 15px;">
+                <i class="fa-solid fa-heart" style="font-size:2rem;"></i>
             </div>
-
-            <h3>
-                ¡Tu presencia hará este día aún más especial!
-            </h3>
-
-            <p>
-                Estamos muy felices de celebrar la próxima llegada
-                de nuestra pequeña <strong>Adara Bela</strong>
-                junto a las personas que queremos.
-            </p>
-
+            <h3>¡Tu presencia hará este día aún más especial!</h3>
+            <p>Estamos muy felices de celebrar la llegada de nuestra pequeña <strong>Adara Bela</strong> junto a las personas que queremos.</p>
         </section>
-
 
         <footer>
-            Hecho con mucho
-            <span class="heart">♥</span>
-            para celebrar la llegada de Adara Bela
+            Hecho con mucho <span class="heart">♥</span> para celebrar la llegada de Adara Bela
         </footer>
-
     </main>
 
-
     <script>
+        // ===========================================
+        // BURBUJAS
+        // ===========================================
+        (function createBubbles() {
+            const container = document.getElementById('bubbleContainer');
+            const count = 14;
+            for (let i = 0; i < count; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = 20 + Math.random() * 50;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDuration = 12 + Math.random() * 18 + 's';
+                bubble.style.animationDelay = Math.random() * 15 + 's';
+                bubble.style.opacity = 0.25 + Math.random() * 0.3;
+                container.appendChild(bubble);
+            }
+        })();
 
-        // =====================================================
+        // ===========================================
         // CUENTA REGRESIVA
-        // Fecha: 23 de agosto de 2026 - 6:00 PM
-        // Hora Perú: UTC-5
-        // =====================================================
-
-        const eventDate = new Date(
-            "2026-08-23T18:00:00-05:00"
-        ).getTime();
-
-
+        // ===========================================
+        const eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
         let celebrationLaunched = false;
 
-
         function updateCountdown() {
-
             const now = new Date().getTime();
             const distance = eventDate - now;
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
 
-
-            const daysEl = document.getElementById("days");
-            const hoursEl = document.getElementById("hours");
-            const minutesEl = document.getElementById("minutes");
-            const secondsEl = document.getElementById("seconds");
-
-
-            // Cuando llega la fecha
             if (distance <= 0) {
-
-                daysEl.textContent = "00";
-                hoursEl.textContent = "00";
-                minutesEl.textContent = "00";
-                secondsEl.textContent = "00";
-
-
+                daysEl.textContent = '00';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
                 if (!celebrationLaunched) {
-
                     celebrationLaunched = true;
-
-                    if (typeof confetti === "function") {
-
-                        confetti({
-                            particleCount: 180,
-                            spread: 100,
-                            origin: {
-                                y: 0.6
-                            }
-                        });
-
+                    if (typeof confetti === 'function') {
+                        confetti({ particleCount: 200, spread: 110, origin: { y: 0.5 } });
+                        setTimeout(() => confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } }), 300);
                     }
-
                 }
-
                 return;
             }
 
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            const days = Math.floor(
-                distance / (1000 * 60 * 60 * 24)
-            );
-
-            const hours = Math.floor(
-                (
-                    distance %
-                    (1000 * 60 * 60 * 24)
-                ) /
-                (1000 * 60 * 60)
-            );
-
-            const minutes = Math.floor(
-                (
-                    distance %
-                    (1000 * 60 * 60)
-                ) /
-                (1000 * 60)
-            );
-
-            const seconds = Math.floor(
-                (
-                    distance %
-                    (1000 * 60)
-                ) /
-                1000
-            );
-
-
-            daysEl.textContent =
-                String(days).padStart(2, "0");
-
-            hoursEl.textContent =
-                String(hours).padStart(2, "0");
-
-            minutesEl.textContent =
-                String(minutes).padStart(2, "0");
-
-            secondsEl.textContent =
-                String(seconds).padStart(2, "0");
-
+            daysEl.textContent = String(days).padStart(2, '0');
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
         }
 
-
         updateCountdown();
-
         setInterval(updateCountdown, 1000);
 
-
-        // =====================================================
+        // ===========================================
         // COPIAR YAPE
-        // =====================================================
+        // ===========================================
+        const copyButton = document.getElementById('copyYape');
+        const copyMessage = document.getElementById('copyMessage');
+        const yapeNumber = '903051441';
 
-        const copyButton =
-            document.getElementById("copyYape");
-
-        const copyMessage =
-            document.getElementById("copyMessage");
-
-        const yapeNumber =
-            "903051441";
-
-
-        copyButton.addEventListener(
-            "click",
-            async function () {
-
-                try {
-
-                    if (
-                        navigator.clipboard &&
-                        window.isSecureContext
-                    ) {
-
-                        await navigator.clipboard.writeText(
-                            yapeNumber
-                        );
-
-                    } else {
-
-                        const textArea =
-                            document.createElement("textarea");
-
-                        textArea.value = yapeNumber;
-
-                        textArea.style.position = "fixed";
-                        textArea.style.left = "-9999px";
-
-                        document.body.appendChild(textArea);
-
-                        textArea.select();
-
-                        document.execCommand("copy");
-
-                        textArea.remove();
-
-                    }
-
-
-                    copyMessage.innerHTML =
-                        '<i class="fa-solid fa-circle-check"></i> ' +
-                        '¡Número copiado correctamente!';
-
-
-                    copyButton.innerHTML =
-                        '<i class="fa-solid fa-check"></i> ' +
-                        '¡Número copiado!';
-
-
-                    // Pequeño confetti al copiar
-                    if (typeof confetti === "function") {
-
-                        confetti({
-                            particleCount: 60,
-                            spread: 60,
-                            origin: {
-                                y: 0.7
-                            }
-                        });
-
-                    }
-
-
-                    setTimeout(function () {
-
-                        copyButton.innerHTML =
-                            '<i class="fa-regular fa-copy"></i> ' +
-                            'Copiar número de Yape';
-
-                        copyMessage.textContent = "";
-
-                    }, 3000);
-
-
-                } catch (error) {
-
-                    copyMessage.textContent =
-                        "No se pudo copiar automáticamente. " +
-                        "Número: " + yapeNumber;
-
+        copyButton.addEventListener('click', async function() {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(yapeNumber);
+                } else {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = yapeNumber;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-9999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    textArea.remove();
                 }
-
+                copyMessage.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Número copiado!';
+                copyButton.innerHTML = '<i class="fa-solid fa-check"></i> ¡Listo!';
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                }
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="fa-regular fa-copy"></i> Copiar número';
+                    copyMessage.textContent = '';
+                }, 2800);
+            } catch (error) {
+                copyMessage.textContent = 'Número: ' + yapeNumber;
             }
-        );
+        });
 
-
-        // =====================================================
+        // ===========================================
         // CONFETTI DE BIENVENIDA
-        // =====================================================
-
-        window.addEventListener(
-            "load",
-            function () {
-
-                setTimeout(function () {
-
-                    if (typeof confetti === "function") {
-
-                        confetti({
-                            particleCount: 30,
-                            angle: 60,
-                            spread: 50,
-                            origin: {
-                                x: 0
-                            }
-                        });
-
-
-                        confetti({
-                            particleCount: 30,
-                            angle: 120,
-                            spread: 50,
-                            origin: {
-                                x: 1
-                            }
-                        });
-
-                    }
-
-                }, 900);
-
-            }
-        );
-
+        // ===========================================
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 40, angle: 60, spread: 55, origin: { x: 0 } });
+                    confetti({ particleCount: 40, angle: 120, spread: 55, origin: { x: 1 } });
+                }
+            }, 700);
+        });
     </script>
 
 </body>
