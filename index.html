@@ -50,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA RENOVADO ===== */
+        /* ===== REPRODUCTOR DE MÚSICA ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -458,90 +458,62 @@
             background: linear-gradient(145deg, #f6e6bd, #e9cf91);
         }
 
-        .gift-list {
-            display: grid;
-            gap: 10px;
-            margin: 14px 0;
-        }
-        .gift-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #f6dce3;
-            border-radius: 16px;
-            padding: 12px 14px;
-        }
-        .gift-details {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-        .gift-details i {
-            font-size: 1.6rem;
-            color: var(--rosa-oscuro);
-            background: #fff0f4;
-            padding: 10px;
-            border-radius: 12px;
-            min-width: 44px;
+        /* ===== SECCIÓN YAPE (sin mesa de regalos) ===== */
+        .yape-section {
             text-align: center;
+            padding: 10px 0;
         }
-        .gift-details h4 {
-            font-size: 0.8rem;
-            color: var(--texto);
+        .yape-section .icon-circle {
+            margin: 0 auto 10px;
         }
-        .gift-details p {
-            font-size: 0.65rem;
-            color: #a8848d;
-        }
-
-        .btn-select {
-            background: linear-gradient(145deg, #fce7ed, #f7c9d4);
+        .yape-section h2 {
+            font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            border: 1px solid var(--rosa-oscuro);
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 8px;
         }
-        .btn-select:active {
-            transform: scale(0.92);
-        }
-        .btn-select.elegido {
-            background: #c9778d;
-            color: white;
-            border-color: #c9778d;
+        .yape-section .desc {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            color: var(--texto);
         }
 
         .yape-box {
-            margin: 14px auto 4px;
-            padding: 16px 12px;
-            max-width: 320px;
-            border-radius: 22px;
-            background: rgba(255, 255, 255, 0.85);
+            margin: 10px auto 4px;
+            padding: 20px 16px;
+            max-width: 340px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.9);
             border: 2px dashed var(--dorado);
             text-align: center;
+            box-shadow: 0 8px 25px rgba(201, 168, 106, 0.12);
+        }
+        .yape-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--dorado);
+            font-weight: 800;
+        }
+        .yape-label i {
+            margin-right: 6px;
         }
         .yape-number {
-            margin-top: 6px;
-            font-size: clamp(1.6rem, 7vw, 2.2rem);
+            margin-top: 8px;
+            font-size: clamp(1.8rem, 8vw, 2.4rem);
             font-weight: 800;
             font-family: 'Fira Code', monospace;
             color: #80616a;
+            letter-spacing: 2px;
         }
         .copy-message {
-            min-height: 20px;
-            margin-top: 8px;
+            min-height: 22px;
+            margin-top: 10px;
             color: #a8844f;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
 
         footer {
@@ -597,18 +569,11 @@
         }
 
         @media (max-width: 480px) {
-            .gift-item {
-                flex-wrap: wrap;
-                gap: 6px;
+            .yape-section h2 {
+                font-size: 2.2rem;
             }
-            .btn-select {
-                width: 100%;
-                justify-content: center;
-            }
-            .gift-details i {
-                font-size: 1.3rem;
-                padding: 8px;
-                min-width: 36px;
+            .yape-box {
+                padding: 16px 12px;
             }
         }
     </style>
@@ -618,7 +583,7 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA RENOVADO ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
     <div id="musicPlayer">
         <i class="fa-solid fa-music music-icon"></i>
         <div class="music-info">
@@ -638,6 +603,7 @@
 
     <main class="container">
 
+        <!-- ===== PORTADA ===== -->
         <section class="card hero reveal">
             <div class="visit-counter">
                 <i class="fa-solid fa-circle"></i>
@@ -650,6 +616,7 @@
             <div class="parents">Con mucho amor, <strong>Heiner y Loedir</strong> te invitan a celebrar</div>
         </section>
 
+        <!-- ===== CUENTA REGRESIVA ===== -->
         <section class="card reveal delay-1">
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-code-branch"></i></div>
@@ -664,6 +631,7 @@
             </div>
         </section>
 
+        <!-- ===== INFORMACIÓN + MAPA ===== -->
         <section class="card reveal delay-2">
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-calendar-check"></i></div>
@@ -692,18 +660,18 @@
             </a>
         </section>
 
-        <section class="card gift-card reveal delay-3">
-            <div class="section-heading">
-                <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
-                <h2>🎁 Mesa de Regalos</h2>
-                <p>Elige el regalo que más te guste para Adara Bela:</p>
-            </div>
-            <div class="gift-list" id="giftList"></div>
+        <!-- ===== SOLO YAPE (sin mesa de regalos) ===== -->
+        <section class="card yape-section reveal delay-3">
+            <div class="icon-circle"><i class="fa-solid fa-heart"></i></div>
+            <h2>Un Cariñito para Adara</h2>
+            <p class="desc">
+                Tu presencia será el regalo más hermoso.<br>
+                Si deseas acompañarnos con un pequeño detalle<br>
+                para nuestra princesa, puedes hacerlo con mucho amor.
+            </p>
 
             <div class="yape-box">
-                <div style="font-size:0.7rem; color:var(--dorado); font-weight:800; letter-spacing:2px;">
-                    <i class="fa-solid fa-heart"></i> YAPE / CARIÑITO
-                </div>
+                <div class="yape-label"><i class="fa-solid fa-heart"></i> Yape / Cariñito</div>
                 <div class="yape-number" id="yapeNumber">903051441</div>
                 <button class="btn btn-gift" id="copyYape" type="button">
                     <i class="fa-regular fa-copy"></i> Copiar número
@@ -719,7 +687,6 @@
         // ============================================================
         // 0. REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
         // ============================================================
-        // Usamos un timestamp para evitar caché
         const audioSrc = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3?v=' + Date.now();
         const audio = new Audio(audioSrc);
         audio.loop = true;
@@ -744,12 +711,10 @@
             });
         }
 
-        // Intentar autoplay al cargar
         window.addEventListener('load', function() {
             setTimeout(playMusic, 500);
         });
 
-        // Si el autoplay falla, se activa con el primer clic del usuario
         document.addEventListener('click', function firstInteraction() {
             if (!isPlaying) {
                 playMusic();
@@ -757,7 +722,6 @@
             document.removeEventListener('click', firstInteraction);
         }, { once: true });
 
-        // Toggle play/pause
         toggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (isPlaying) {
@@ -770,19 +734,16 @@
             }
         });
 
-        // Control de volumen
         volumeSlider.addEventListener('input', function(e) {
             audio.volume = parseFloat(e.target.value);
         });
 
-        // Manejar errores de audio
         audio.addEventListener('error', function() {
             musicStatus.textContent = '🔇 Error al cargar';
             musicIcon.className = 'fa-solid fa-play';
             isPlaying = false;
         });
 
-        // Cuando el audio termina (por si acaso)
         audio.addEventListener('ended', function() {
             if (isPlaying) {
                 audio.play().catch(function() {});
@@ -790,53 +751,7 @@
         });
 
         // ============================================================
-        // 1. LISTA DE REGALOS
-        // ============================================================
-        const giftListData = [
-            { icon: 'fa-solid fa-bed', name: '🛏️ Cuna / Moisés', desc: 'Cuna de madera con mosquitero' },
-            { icon: 'fa-solid fa-bath', name: '🛁 Bañera', desc: 'Bañera ergonómica con soporte' },
-            { icon: 'fa-solid fa-baby-carriage', name: '🚼 Carriola / Cochecito', desc: 'Carriola plegable 3 en 1' },
-            { icon: 'fa-solid fa-chair', name: '🪑 Silla de paseo', desc: 'Silla portabebé acolchada' },
-            { icon: 'fa-solid fa-box-open', name: '📦 Andador / Saltarín', desc: 'Andador musical con juguetes' },
-            { icon: 'fa-solid fa-shield-halved', name: '🛡️ Protectores de cuna', desc: 'Set de protectores acolchados' },
-            { icon: 'fa-solid fa-shirt', name: '👗 Ropita y Bodys', desc: 'Tallas 0-3 meses, algodón orgánico' },
-            { icon: 'fa-solid fa-socks', name: '🧦 Conjunto de ropa', desc: 'Pijamas, gorritos y manoplas' },
-            { icon: 'fa-solid fa-box', name: '🧷 Pañales', desc: 'Talla P o M, pañales ecológicos' },
-            { icon: 'fa-solid fa-bottle-droplet', name: '🍼 Biberones', desc: 'Set con cepillo y esterilizador' },
-            { icon: 'fa-solid fa-kit-medical', name: '🧴 Kit de aseo', desc: 'Champú, loción, crema y peine' },
-            { icon: 'fa-solid fa-toilet-paper', name: '🧻 Toallitas húmedas', desc: 'Packs de 80+ sin alcohol' },
-            { icon: 'fa-solid fa-baby', name: '🧸 Juguetes', desc: 'Sonajeros, móvil y peluches' },
-            { icon: 'fa-solid fa-cloud', name: '🛏️ Cobijas y mantas', desc: 'Mantas de algodón orgánico' },
-            { icon: 'fa-solid fa-tent', name: '🏕️ Tienda de campaña', desc: 'Tienda de juego portátil' },
-            { icon: 'fa-solid fa-couch', name: '🛋️ Cojín lactancia', desc: 'Cojín de lactancia ortopédico' },
-            { icon: 'fa-solid fa-music', name: '🎵 Móvil musical', desc: 'Móvil para cuna con sonidos' },
-            { icon: 'fa-solid fa-book', name: '📚 Libros infantiles', desc: 'Set de cuentos con texturas' },
-            { icon: 'fa-solid fa-lightbulb', name: '💡 Lámpara de noche', desc: 'Luz nocturna proyecta estrellas' },
-            { icon: 'fa-solid fa-scale-balanced', name: '⚖️ Balanza para bebé', desc: 'Báscula digital para control' },
-            { icon: 'fa-solid fa-kitchen-set', name: '🍽️ Utensilios destete', desc: 'Platos, cucharas y baberos' },
-            { icon: 'fa-solid fa-sack-dollar', name: '💰 Ahorro futuro', desc: 'Depósito en cuenta de ahorros' },
-            { icon: 'fa-solid fa-heart', name: '💝 Cariñito en Yape', desc: 'Lo que desees para ayudarnos' },
-        ];
-
-        const giftListContainer = document.getElementById('giftList');
-        giftListData.forEach(function(gift) {
-            const item = document.createElement('div');
-            item.className = 'gift-item';
-            item.innerHTML = `
-                <div class="gift-details">
-                    <i class="${gift.icon}"></i>
-                    <div>
-                        <h4>${gift.name}</h4>
-                        <p>${gift.desc}</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="${gift.name}">Elegir <i class="fa-solid fa-check"></i></button>
-            `;
-            giftListContainer.appendChild(item);
-        });
-
-        // ============================================================
-        // 2. CONTADOR DE VISITAS
+        // 1. CONTADOR DE VISITAS
         // ============================================================
         async function fetchGlobalVisits() {
             try {
@@ -852,7 +767,7 @@
         fetchGlobalVisits();
 
         // ============================================================
-        // 3. ESTRELLITAS AL TOCAR
+        // 2. ESTRELLITAS AL TOCAR
         // ============================================================
         const starCanvas = document.getElementById('starCanvas');
         const starCtx = starCanvas.getContext('2d');
@@ -943,7 +858,7 @@
         animateStars();
 
         // ============================================================
-        // 4. BURBUJAS DE FONDO
+        // 3. BURBUJAS DE FONDO
         // ============================================================
         var canvas = document.getElementById('bubbleCanvas');
         var ctx = canvas.getContext('2d');
@@ -991,7 +906,7 @@
         animateBubbles();
 
         // ============================================================
-        // 5. CUENTA REGRESIVA
+        // 4. CUENTA REGRESIVA
         // ============================================================
         var eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
         setInterval(function() {
@@ -1015,7 +930,7 @@
         }, 1000);
 
         // ============================================================
-        // 6. COPIAR YAPE
+        // 5. COPIAR YAPE
         // ============================================================
         document.getElementById('copyYape').addEventListener('click', async function() {
             var num = '903051441';
@@ -1030,72 +945,7 @@
         });
 
         // ============================================================
-        // 7. SELECCIÓN DE REGALO → WHATSAPP
-        // ============================================================
-        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-
-        function playLullaby() {
-            try {
-                var osc = audioCtx.createOscillator();
-                var gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = 'sine';
-                osc.frequency.value = 523.25;
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
-                osc.start(audioCtx.currentTime);
-                osc.stop(audioCtx.currentTime + 0.6);
-            } catch (e) {}
-        }
-
-        var selectedGifts = JSON.parse(localStorage.getItem('adara_selected_gifts') || '[]');
-
-        document.querySelectorAll('.btn-select').forEach(function(btn) {
-            var giftName = btn.getAttribute('data-gift');
-            if (selectedGifts.includes(giftName)) {
-                btn.textContent = '✓ Elegido';
-                btn.classList.add('elegido');
-                btn.disabled = true;
-            }
-
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                var gift = this.getAttribute('data-gift');
-                if (this.classList.contains('elegido')) return;
-
-                if (typeof confetti === 'function') {
-                    confetti({ particleCount: 70, spread: 90, origin: { y: 0.4 } });
-                    setTimeout(function() { confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } }); },
-                    200);
-                    setTimeout(function() { confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } }); },
-                    400);
-                }
-
-                playLullaby();
-
-                var rect = this.getBoundingClientRect();
-                createStars(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
-
-                this.textContent = '✓ Elegido';
-                this.classList.add('elegido');
-                this.disabled = true;
-
-                if (!selectedGifts.includes(gift)) {
-                    selectedGifts.push(gift);
-                    localStorage.setItem('adara_selected_gifts', JSON.stringify(selectedGifts));
-                }
-
-                var msg = encodeURIComponent(
-                    '¡Hola Heiner y Loedir! 👋 Me encantaría regalarles para Adara Bela: ' + gift);
-                setTimeout(function() {
-                    window.open('https://wa.me/51903051441?text=' + msg, '_blank');
-                }, 600);
-            });
-        });
-
-        // ============================================================
-        // 8. CONFETTI DE BIENVENIDA
+        // 6. CONFETTI DE BIENVENIDA
         // ============================================================
         window.addEventListener('load', function() {
             setTimeout(function() {
