@@ -55,7 +55,7 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA (visible y funcional) ===== */
+        /* ===== REPRODUCTOR DE MÚSICA ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -559,7 +559,7 @@
     <!-- CANVAS burbujas de fondo -->
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA (AUTOMÁTICO Y CONFIABLE) ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA (Canción de cuna instrumental) ===== -->
     <div id="musicPlayer">
         <i class="fa-solid fa-music"></i>
         <span class="status" id="musicStatus">🎵 Cargando...</span>
@@ -675,7 +675,7 @@
 
 <script>
     // ============================================================
-    // 0. REPRODUCTOR DE MÚSICA (Audio nativo con autoplay mejorado)
+    // 0. REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
     // ============================================================
     const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
     audio.loop = true;
@@ -702,18 +702,18 @@
         });
     }
 
-    // Intentar autoplay al cargar la página (después de que el usuario interactúe)
+    // Intentar autoplay al cargar la página
+    window.addEventListener('load', function() {
+        setTimeout(playMusic, 800);
+    });
+
+    // Si el autoplay falla, se activa con el primer clic del usuario
     document.addEventListener('click', function firstInteraction() {
         if (!isPlaying) {
             playMusic();
         }
         document.removeEventListener('click', firstInteraction);
     }, { once: true });
-
-    // También intentar al cargar la página
-    window.addEventListener('load', function() {
-        setTimeout(playMusic, 1000);
-    });
 
     // Toggle play/pause
     toggleBtn.addEventListener('click', () => {
