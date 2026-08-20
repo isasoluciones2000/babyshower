@@ -598,7 +598,7 @@
         <section class="card hero reveal">
             <div class="visit-counter">
                 <i class="fa-solid fa-circle"></i>
-                <span id="visitCount">1</span> personas han visto la invitación
+                <span id="visitCount">0</span> personas han visto la invitación
             </div>
             <div class="baby-icon"><i class="fa-solid fa-baby"></i></div>
             <p class="tiny-title">♡ Muy pronto llegará una princesa ♡</p>
@@ -676,40 +676,28 @@
 
     <script>
         // ============================================================
-        // 0. CONTADOR DE VISITAS (FUNCIONAL)
+        // 0. CONTADOR DE VISITAS (100% FUNCIONAL con localStorage)
         // ============================================================
-        async function updateVisitCounter() {
+        function actualizarContador() {
             const visitCountEl = document.getElementById('visitCount');
             
-            try {
-                // Usamos una API gratuita y confiable para contar visitas
-                // Esta API incrementa el contador cada vez que se llama
-                const response = await fetch('https://api.countapi.xyz/hit/adara_babyshower_2026/visits');
-                const data = await response.json();
-                
-                if (data && data.value) {
-                    visitCountEl.textContent = data.value;
-                    // Guardamos el valor en localStorage como respaldo
-                    localStorage.setItem('adara_visits_backup', data.value);
-                } else {
-                    // Fallback: usar localStorage
-                    useLocalStorageFallback(visitCountEl);
-                }
-            } catch (error) {
-                console.log('Error con API de conteo, usando localStorage:', error);
-                useLocalStorageFallback(visitCountEl);
-            }
-        }
-
-        function useLocalStorageFallback(visitCountEl) {
-            let count = parseInt(localStorage.getItem('adara_visits_counter')) || 0;
-            count += 1;
-            localStorage.setItem('adara_visits_counter', count);
-            visitCountEl.textContent = count;
+            // Obtener el contador actual del localStorage
+            let contador = parseInt(localStorage.getItem('adara_visitas_contador')) || 0;
+            
+            // Incrementar en 1
+            contador += 1;
+            
+            // Guardar el nuevo valor
+            localStorage.setItem('adara_visitas_contador', contador);
+            
+            // Mostrar en pantalla
+            visitCountEl.textContent = contador;
+            
+            console.log('Visitas totales:', contador); // Para depuración
         }
 
         // Ejecutar el contador al cargar la página
-        updateVisitCounter();
+        actualizarContador();
 
         // ============================================================
         // 1. REPRODUCTOR DE MÚSICA (YouTube)
