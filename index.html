@@ -6,7 +6,7 @@
     <title>Baby Shower · Adara Bela ✨</title>
 
     <!-- Fuentes y Librerías -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&family=Playwrite+AU+SA:wght@100..400&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -55,13 +55,13 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA (oculto pero activo) ===== */
+        /* ===== REPRODUCTOR DE MÚSICA ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 999;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(8px);
             border-radius: 50px;
             padding: 10px 16px;
@@ -97,6 +97,28 @@
             font-weight: 600;
             color: var(--texto);
             font-size: 0.65rem;
+        }
+        #musicPlayer .volume-slider {
+            width: 50px;
+            accent-color: var(--rosa-oscuro);
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            #musicPlayer {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.6rem;
+                flex-wrap: wrap;
+                gap: 6px;
+                border-radius: 30px;
+            }
+            #musicPlayer .volume-slider {
+                width: 35px;
+            }
+            #musicPlayer i {
+                font-size: 1rem;
+            }
         }
 
         .container {
@@ -153,7 +175,7 @@
             }
         }
 
-        /* ===== HERO con A estilizada (fuente diferente) ===== */
+        /* ===== HERO con A estilizada ===== */
         .hero {
             text-align: center;
             padding: 18px 8px 12px;
@@ -169,7 +191,6 @@
             letter-spacing: 1.5px;
         }
 
-        /* Fuente totalmente diferente para la A - Dancing Script + efectos */
         .letter-a {
             display: inline-block;
             position: relative;
@@ -177,10 +198,8 @@
             font-weight: 700;
             font-size: 1.2em;
             color: #c9778d;
-            text-shadow: 
-                0 0 20px rgba(201, 119, 141, 0.4),
-                0 0 40px rgba(201, 119, 141, 0.2),
-                2px 2px 0 rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 20px rgba(201, 119, 141, 0.4), 0 0 40px rgba(201, 119, 141, 0.2), 2px 2px 0 rgba(255, 255,
+                    255, 0.8);
             transform: rotate(-4deg) scale(1.1);
             padding: 0 4px;
             background: linear-gradient(145deg, #f7c9d4, #b56576);
@@ -195,7 +214,8 @@
                 filter: drop-shadow(0 4px 12px rgba(201, 119, 141, 0.3));
             }
             100% {
-                filter: drop-shadow(0 8px 30px rgba(201, 119, 141, 0.7)) drop-shadow(0 0 60px rgba(247, 201, 212, 0.3));
+                filter: drop-shadow(0 8px 30px rgba(201, 119, 141, 0.7)) drop-shadow(0 0 60px rgba(247, 201, 212,
+                        0.3));
             }
         }
 
@@ -529,50 +549,6 @@
             z-index: 9999;
             pointer-events: none;
         }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 480px) {
-            .gift-item {
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            .btn-select {
-                width: 100%;
-                justify-content: center;
-            }
-            .gift-details i {
-                font-size: 1.3rem;
-                padding: 8px;
-                min-width: 36px;
-            }
-            .gift-details h4 {
-                font-size: 0.75rem;
-            }
-            #musicPlayer {
-                bottom: 10px;
-                right: 10px;
-                padding: 8px 12px;
-                font-size: 0.6rem;
-            }
-            #musicPlayer i {
-                font-size: 1rem;
-            }
-        }
-        @media (max-width: 380px) {
-            .container {
-                padding: 8px 10px 15px;
-            }
-            .card {
-                padding: 14px 12px;
-                margin: 10px 0;
-            }
-            .count-box {
-                padding: 8px 2px;
-            }
-            .map-container {
-                height: 140px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -583,13 +559,14 @@
     <!-- CANVAS burbujas de fondo -->
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA (oculto pero visible y funcional) ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
     <div id="musicPlayer">
         <i class="fa-solid fa-music"></i>
         <span class="status" id="musicStatus">🎵 Canción de cuna</span>
         <button id="toggleMusic" title="Pausar/Reanudar música">
             <i class="fa-solid fa-pause" id="musicIcon"></i>
         </button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
     </div>
 
     <main class="container">
@@ -698,58 +675,58 @@
 
 <script>
     // ============================================================
-    // 0. REPRODUCTOR DE MÚSICA (YouTube iframe embebido)
+    // 0. REPRODUCTOR DE MÚSICA (Audio nativo)
     // ============================================================
-    const musicPlayer = document.getElementById('musicPlayer');
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    audio.loop = true;
+    audio.volume = 0.7;
+
     const toggleBtn = document.getElementById('toggleMusic');
     const musicIcon = document.getElementById('musicIcon');
     const musicStatus = document.getElementById('musicStatus');
+    const volumeSlider = document.getElementById('volumeSlider');
 
-    // Crear iframe de YouTube oculto
-    const ytIframe = document.createElement('iframe');
-    ytIframe.id = 'ytPlayer';
-    ytIframe.src = 'https://www.youtube.com/embed/eFjjO5ygybc?autoplay=1&loop=1&playlist=eFjjO5ygybc&controls=0&showinfo=0&rel=0&mute=0&enablejsapi=1';
-    ytIframe.style.position = 'fixed';
-    ytIframe.style.top = '-9999px';
-    ytIframe.style.left = '-9999px';
-    ytIframe.style.width = '0';
-    ytIframe.style.height = '0';
-    ytIframe.style.border = 'none';
-    ytIframe.allow = 'autoplay; encrypted-media';
-    document.body.appendChild(ytIframe);
+    let isPlaying = false;
 
-    let isPlaying = true;
-
-    // Intentar autoplay
-    setTimeout(() => {
-        try {
-            ytIframe.src = ytIframe.src;
-        } catch (e) { /* fallback */ }
-    }, 500);
-
-    toggleBtn.addEventListener('click', () => {
-        try {
-            if (isPlaying) {
-                ytIframe.src = 'about:blank';
-                setTimeout(() => {
-                    ytIframe.src = 'https://www.youtube.com/embed/eFjjO5ygybc?autoplay=0&loop=1&playlist=eFjjO5ygybc&controls=0&showinfo=0&rel=0&mute=0&enablejsapi=1';
-                }, 100);
-                musicIcon.className = 'fa-solid fa-play';
-                musicStatus.textContent = '⏸️ Pausado';
-                isPlaying = false;
-            } else {
-                ytIframe.src = 'https://www.youtube.com/embed/eFjjO5ygybc?autoplay=1&loop=1&playlist=eFjjO5ygybc&controls=0&showinfo=0&rel=0&mute=0&enablejsapi=1';
-                musicIcon.className = 'fa-solid fa-pause';
-                musicStatus.textContent = '🎵 Canción de cuna';
-                isPlaying = true;
-            }
-        } catch (e) {
-            // Fallback: recargar
-            ytIframe.src = 'https://www.youtube.com/embed/eFjjO5ygybc?autoplay=1&loop=1&playlist=eFjjO5ygybc&controls=0&showinfo=0&rel=0&mute=0&enablejsapi=1';
+    // Función para iniciar/reanudar
+    function playMusic() {
+        audio.play().then(() => {
+            isPlaying = true;
             musicIcon.className = 'fa-solid fa-pause';
             musicStatus.textContent = '🎵 Canción de cuna';
-            isPlaying = true;
+        }).catch(() => {
+            // Si falla el autoplay, mostramos mensaje para que el usuario toque
+            musicStatus.textContent = '🔇 Toca para reproducir';
+            musicIcon.className = 'fa-solid fa-play';
+            isPlaying = false;
+        });
+    }
+
+    // Intentar autoplay al cargar
+    setTimeout(playMusic, 500);
+
+    // Toggle play/pause
+    toggleBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            musicIcon.className = 'fa-solid fa-play';
+            musicStatus.textContent = '⏸️ Pausado';
+        } else {
+            playMusic();
         }
+    });
+
+    // Control de volumen
+    volumeSlider.addEventListener('input', (e) => {
+        audio.volume = parseFloat(e.target.value);
+    });
+
+    // Si el audio se detiene por error, reintentar
+    audio.addEventListener('error', () => {
+        musicStatus.textContent = '🔇 Toca para reproducir';
+        musicIcon.className = 'fa-solid fa-play';
+        isPlaying = false;
     });
 
     // ============================================================
