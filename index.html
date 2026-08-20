@@ -111,60 +111,10 @@
             }
         }
 
-        /* ===== TERMINAL ===== */
-        .terminal-header {
-            background: var(--code-bg);
-            border-radius: 16px 16px 0 0;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .terminal-dots {
-            display: flex;
-            gap: 6px;
-        }
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        .dot-red {
-            background: #ff5f56;
-        }
-        .dot-yellow {
-            background: #ffbd2e;
-        }
-        .dot-green {
-            background: #27c93f;
-        }
-        .terminal-title {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            color: #d1b3bd;
-        }
-        .terminal-body {
-            background: #1e1719;
-            border-radius: 0 0 16px 16px;
-            padding: 14px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.78rem;
-            color: var(--code-text);
-            line-height: 1.7;
-            margin-bottom: 16px;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
-            text-align: left;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        .code-keyword {
-            color: #e5829b;
-        }
-        .code-string {
-            color: #ead7ad;
-        }
-        .code-var {
-            color: #88c0d0;
+        /* ===== TERMINAL OCULTA (solo para mantener estructura) ===== */
+        .terminal-wrapper {
+            display: none;
+            /* Oculto completamente */;
         }
 
         /* ===== HERO con A estilizada ===== */
@@ -183,7 +133,6 @@
             letter-spacing: 1.5px;
         }
 
-        /* A de Adara con estilo único */
         .letter-a {
             display: inline-block;
             position: relative;
@@ -280,6 +229,10 @@
             font-family: 'Playfair Display', serif;
             color: #98745a;
             font-size: 1.2rem;
+        }
+        .section-heading p {
+            font-size: 0.78rem;
+            color: #7f6a70;
         }
 
         .countdown {
@@ -410,6 +363,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex: 1;
         }
         .gift-details i {
             font-size: 1.6rem;
@@ -443,9 +397,15 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            flex-shrink: 0;
         }
         .btn-select:active {
             transform: scale(0.92);
+        }
+        .btn-select.elegido {
+            background: #c9778d;
+            color: white;
+            border-color: #c9778d;
         }
 
         /* ===== YAPE ===== */
@@ -528,10 +488,10 @@
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 420px) {
+        @media (max-width: 480px) {
             .gift-item {
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
             }
             .btn-select {
                 width: 100%;
@@ -541,6 +501,24 @@
                 font-size: 1.3rem;
                 padding: 8px;
                 min-width: 36px;
+            }
+            .gift-details h4 {
+                font-size: 0.75rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .container {
+                padding: 8px 10px 15px;
+            }
+            .card {
+                padding: 14px 12px;
+                margin: 10px 0;
+            }
+            .count-box {
+                padding: 8px 2px;
+            }
+            .map-container {
+                height: 140px;
             }
         }
     </style>
@@ -563,18 +541,8 @@
                 <span id="visitCount">1</span> personas han visto la invitación
             </div>
 
-            <div class="terminal-header">
-                <div class="terminal-dots">
-                    <div class="dot dot-red"></div>
-                    <div class="dot dot-yellow"></div>
-                    <div class="dot dot-green"></div>
-                </div>
-                <div class="terminal-title">baby_init.js</div>
-            </div>
-            <div class="terminal-body"><span class="code-keyword">const</span> <span class="code-var">baby</span> = <span class="code-keyword">new</span> Baby({
-                name: <span class="code-string">'<span class="letter-a">A</span>dara Bela'</span>,
-                status: <span class="code-string">'Ready to compile...'</span>
-            });</div>
+            <!-- Terminal oculta (no se muestra) -->
+            <div class="terminal-wrapper" style="display:none;"></div>
 
             <div class="baby-icon">
                 <i class="fa-solid fa-baby"></i>
@@ -640,98 +608,16 @@
         </a>
     </section>
 
-    <!-- ===== CATÁLOGO DE REGALOS ===== -->
+    <!-- ===== CATÁLOGO DE REGALOS (MÁS DE 20 OPCIONES) ===== -->
     <section class="card gift-card reveal delay-3">
         <div class="section-heading">
             <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
-            <h2>Mesa de Regalos</h2>
+            <h2>🎁 Mesa de Regalos</h2>
             <p>Elige el regalo que más te guste para Adara Bela:</p>
         </div>
 
-        <div class="gift-list">
-            <!-- Cuna / Moisés -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-bed"></i>
-                    <div>
-                        <h4>🛏️ Cuna o moisés</h4>
-                        <p>La cuna principal (ya tenemos una, pero puedes elegir otra)</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Cuna o moisés">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Ropita -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-shirt"></i>
-                    <div>
-                        <h4>👗 Ropita y Bodys</h4>
-                        <p>Tallas 0 a 3 meses · Conjuntos de algodón</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Ropita y Bodys (0-3 meses)">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Pañales -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-box-open"></i>
-                    <div>
-                        <h4>🧷 Pañales</h4>
-                        <p>Talla P o M · Pañales ecológicos</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Pañales Talla P/M">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Biberones -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-bottle-droplet"></i>
-                    <div>
-                        <h4>🍼 Biberones / Kit Aseo</h4>
-                        <p>Set de biberones con cepillo y esterilizador</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Set de Biberones + Kit Aseo">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Toallitas -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-toilet-paper"></i>
-                    <div>
-                        <h4>🧻 Toallitas Húmedas</h4>
-                        <p>Packs de 80+ toallitas · sin alcohol</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Toallitas Húmedas (pack grande)">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Juguetes -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-baby"></i>
-                    <div>
-                        <h4>🧸 Juguetes de estimulación</h4>
-                        <p>Sonajeros, móvil de cuna y peluches</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Juguetes de estimulación">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
-
-            <!-- Cobijas -->
-            <div class="gift-item">
-                <div class="gift-details">
-                    <i class="fa-solid fa-cloud"></i>
-                    <div>
-                        <h4>🛏️ Cobijas y mantas</h4>
-                        <p>Mantas de algodón orgánico · set de cuna</p>
-                    </div>
-                </div>
-                <button class="btn-select" data-gift="Cobijas y mantas (set)">Elegir <i class="fa-solid fa-check"></i></button>
-            </div>
+        <div class="gift-list" id="giftList">
+            <!-- Los regalos se generarán con JavaScript para mantener el HTML limpio -->
         </div>
 
         <!-- YAPE -->
@@ -754,7 +640,59 @@
 
 <script>
     // ============================================================
-    // 1. CONTADOR DE VISITAS
+    // 0. LISTA DE REGALOS (más de 20 opciones)
+    // ============================================================
+    const giftListData = [
+        { icon: 'fa-solid fa-bed', name: '🛏️ Cuna / Moisés', desc: 'Cuna de madera con mosquitero' },
+        { icon: 'fa-solid fa-bath', name: '🛁 Bañera', desc: 'Bañera ergonómica con soporte' },
+        { icon: 'fa-solid fa-baby-carriage', name: '🚼 Carriola / Cochecito', desc: 'Carriola plegable 3 en 1' },
+        { icon: 'fa-solid fa-chair', name: '🪑 Silla de paseo', desc: 'Silla portabebé acolchada' },
+        { icon: 'fa-solid fa-box-open', name: '📦 Andador / Saltarín', desc: 'Andador musical con juguetes' },
+        { icon: 'fa-solid fa-shield-halved', name: '🛡️ Protectores de cuna', desc: 'Set de protectores acolchados' },
+        { icon: 'fa-solid fa-shirt', name: '👗 Ropita y Bodys', desc: 'Tallas 0-3 meses, algodón orgánico' },
+        { icon: 'fa-solid fa-socks', name: '🧦 Conjunto de ropa', desc: 'Pijamas, gorritos y manoplas' },
+        { icon: 'fa-solid fa-box', name: '🧷 Pañales', desc: 'Talla P o M, pañales ecológicos' },
+        { icon: 'fa-solid fa-bottle-droplet', name: '🍼 Biberones', desc: 'Set con cepillo y esterilizador' },
+        { icon: 'fa-solid fa-kit-medical', name: '🧴 Kit de aseo', desc: 'Champú, loción, crema y peine' },
+        { icon: 'fa-solid fa-toilet-paper', name: '🧻 Toallitas húmedas', desc: 'Packs de 80+ sin alcohol' },
+        { icon: 'fa-solid fa-baby', name: '🧸 Juguetes', desc: 'Sonajeros, móvil y peluches' },
+        { icon: 'fa-solid fa-cloud', name: '🛏️ Cobijas y mantas', desc: 'Mantas de algodón orgánico' },
+        { icon: 'fa-solid fa-tent', name: '🏕️ Tienda de campaña para bebé', desc: 'Tienda de juego portátil' },
+        { icon: 'fa-solid fa-couch', name: '🛋️ Cojín para lactancia', desc: 'Cojín de lactancia ortopédico' },
+        { icon: 'fa-solid fa-music', name: '🎵 Móvil musical', desc: 'Móvil para cuna con sonidos' },
+        { icon: 'fa-solid fa-book', name: '📚 Libros infantiles', desc: 'Set de cuentos con texturas' },
+        { icon: 'fa-solid fa-lightbulb', name: '💡 Lámpara de noche', desc: 'Luz nocturna proyecta estrellas' },
+        { icon: 'fa-solid fa-scale-balanced', name: '⚖️ Balanza para bebé', desc: 'Báscula digital para control' },
+        { icon: 'fa-solid fa-kitchen-set', name: '🍽️ Utensilios de destete', desc: 'Platos, cucharas y baberos' },
+        { icon: 'fa-solid fa-sack-dollar', name: '💰 Ahorro para su futuro', desc: 'Depósito en su cuenta de ahorros' },
+        { icon: 'fa-solid fa-heart', name: '💝 Cariñito en Yape', desc: 'Lo que desees para ayudarnos' },
+    ];
+
+    // ============================================================
+    // 1. GENERAR LISTA DE REGALOS
+    // ============================================================
+    const giftListContainer = document.getElementById('giftList');
+
+    giftListData.forEach((gift, index) => {
+        const item = document.createElement('div');
+        item.className = 'gift-item';
+        item.innerHTML = `
+                <div class="gift-details">
+                    <i class="${gift.icon}"></i>
+                    <div>
+                        <h4>${gift.name}</h4>
+                        <p>${gift.desc}</p>
+                    </div>
+                </div>
+                <button class="btn-select" data-gift="${gift.name}" data-index="${index}">
+                    Elegir <i class="fa-solid fa-check"></i>
+                </button>
+            `;
+        giftListContainer.appendChild(item);
+    });
+
+    // ============================================================
+    // 2. CONTADOR DE VISITAS
     // ============================================================
     async function fetchGlobalVisits() {
         try {
@@ -770,7 +708,7 @@
     fetchGlobalVisits();
 
     // ============================================================
-    // 2. ESTRELLITAS AL TOCAR / CLICK (canvas overlay)
+    // 3. ESTRELLITAS AL TOCAR / CLICK (canvas overlay)
     // ============================================================
     const starCanvas = document.getElementById('starCanvas');
     const starCtx = starCanvas.getContext('2d');
@@ -792,6 +730,7 @@
             this.decay = 0.015 + Math.random() * 0.02;
             this.rotation = Math.random() * Math.PI * 2;
             this.rotSpeed = (Math.random() - 0.5) * 0.1;
+            this.color = `hsl(${330 + Math.random() * 30}, 70%, ${60 + 30 * Math.random()}%)`;
         }
         update() {
             this.x += this.speedX;
@@ -805,10 +744,9 @@
             ctx.translate(this.x, this.y);
             ctx.rotate(this.rotation);
             ctx.globalAlpha = this.life;
-            ctx.fillStyle = `hsl(330, 70%, ${60 + 30 * this.life}%)`;
+            ctx.fillStyle = this.color;
             ctx.shadowColor = '#c9778d';
             ctx.shadowBlur = 15;
-            // Estrella de 5 puntas
             const spikes = 5;
             const outer = this.size;
             const inner = this.size * 0.4;
@@ -826,18 +764,17 @@
     }
 
     let stars = [];
-    function createStars(x, y, count = 12) {
+
+    function createStars(x, y, count = 14) {
         for (let i = 0; i < count; i++) {
-            stars.push(new Star(x + (Math.random() - 0.5) * 20, y + (Math.random() - 0.5) * 20));
+            stars.push(new Star(x + (Math.random() - 0.5) * 24, y + (Math.random() - 0.5) * 24));
         }
     }
 
-    // Eventos: click y touch
     document.addEventListener('click', (e) => {
         createStars(e.clientX, e.clientY);
-        // También mini confetti
         if (typeof confetti === 'function') {
-            confetti({ particleCount: 15, spread: 30, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window
+            confetti({ particleCount: 12, spread: 30, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window
                         .innerHeight } });
         }
     });
@@ -846,7 +783,7 @@
         const touch = e.touches[0];
         createStars(touch.clientX, touch.clientY);
         if (typeof confetti === 'function') {
-            confetti({ particleCount: 12, spread: 25, origin: { x: touch.clientX / window.innerWidth, y: touch.clientY /
+            confetti({ particleCount: 10, spread: 25, origin: { x: touch.clientX / window.innerWidth, y: touch.clientY /
                         window.innerHeight } });
         }
     }, { passive: true });
@@ -861,7 +798,7 @@
     animateStars();
 
     // ============================================================
-    // 3. BURBUJAS DE FONDO (canvas)
+    // 4. BURBUJAS DE FONDO (canvas)
     // ============================================================
     const canvas = document.getElementById('bubbleCanvas');
     const ctx = canvas.getContext('2d');
@@ -905,7 +842,7 @@
     animateBubbles();
 
     // ============================================================
-    // 4. CUENTA REGRESIVA
+    // 5. CUENTA REGRESIVA
     // ============================================================
     const eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
     setInterval(() => {
@@ -928,7 +865,7 @@
     }, 1000);
 
     // ============================================================
-    // 5. COPIAR YAPE
+    // 6. COPIAR YAPE
     // ============================================================
     document.getElementById('copyYape').addEventListener('click', async () => {
         const num = '903051441';
@@ -943,59 +880,84 @@
     });
 
     // ============================================================
-    // 6. SELECCIÓN DE REGALO → WHATSAPP + CONFETTI + SONIDO
+    // 7. SELECCIÓN DE REGALO → WHATSAPP + CONFETTI + SONIDO
     // ============================================================
-    // Sonido de cuna (se carga silenciosamente)
     const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
     function playLullaby() {
         try {
-            // Nota simple tipo campana
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.type = 'sine';
-            osc.frequency.value = 523.25; // C5
+            osc.frequency.value = 523.25;
             gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
             osc.start(audioCtx.currentTime);
             osc.stop(audioCtx.currentTime + 0.6);
-        } catch (e) { /* silencio si falla */ }
+        } catch (e) { /* silencio */ }
     }
 
+    // Marcar regalos como elegidos localmente
+    let selectedGifts = JSON.parse(localStorage.getItem('adara_selected_gifts') || '[]');
+
     document.querySelectorAll('.btn-select').forEach(btn => {
+        const giftName = btn.getAttribute('data-gift');
+        if (selectedGifts.includes(giftName)) {
+            btn.textContent = '✓ Elegido';
+            btn.classList.add('elegido');
+            btn.disabled = true;
+        }
+
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
             const gift = this.getAttribute('data-gift');
+
+            // Evitar doble selección
+            if (this.classList.contains('elegido')) return;
+
             // Confeti
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 60, spread: 80, origin: { y: 0.5 } });
-                setTimeout(() => confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } }), 200);
+                confetti({ particleCount: 70, spread: 90, origin: { y: 0.4 } });
+                setTimeout(() => confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } }), 200);
+                setTimeout(() => confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } }), 400);
             }
+
             // Sonido cuna
             playLullaby();
 
             // Estrellitas extra
             const rect = this.getBoundingClientRect();
-            createStars(rect.left + rect.width / 2, rect.top + rect.height / 2, 18);
+            createStars(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
+
+            // Marcar como elegido
+            this.textContent = '✓ Elegido';
+            this.classList.add('elegido');
+            this.disabled = true;
+
+            // Guardar en localStorage
+            if (!selectedGifts.includes(gift)) {
+                selectedGifts.push(gift);
+                localStorage.setItem('adara_selected_gifts', JSON.stringify(selectedGifts));
+            }
 
             // Mensaje WhatsApp
-            const msg = encodeURIComponent(`¡Hola Heiner y Loedir! 👋 Me gustaría regalarles para Adara Bela: ${gift}`);
+            const msg = encodeURIComponent(`¡Hola Heiner y Loedir! 👋 Me encantaría regalarles para Adara Bela: ${gift}`);
             setTimeout(() => {
                 window.open(`https://wa.me/51903051441?text=${msg}`, '_blank');
-            }, 550);
+            }, 600);
         });
     });
 
     // ============================================================
-    // 7. CONFETTI DE BIENVENIDA
+    // 8. CONFETTI DE BIENVENIDA
     // ============================================================
     window.addEventListener('load', () => {
         setTimeout(() => {
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 30, angle: 60, spread: 50, origin: { x: 0 } });
-                confetti({ particleCount: 30, angle: 120, spread: 50, origin: { x: 1 } });
+                confetti({ particleCount: 25, angle: 60, spread: 50, origin: { x: 0 } });
+                confetti({ particleCount: 25, angle: 120, spread: 50, origin: { x: 1 } });
             }
         }, 700);
     });
