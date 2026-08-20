@@ -50,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* ===== NUEVO REPRODUCTOR DE MÚSICA (estilo disco de vinilo) ===== */
+        /* ===== REPRODUCTOR DE MÚSICA ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -98,11 +98,6 @@
             border-radius: 50%;
             background: radial-gradient(circle at 40% 40%, #fff, #ccc);
             border: 2px solid #999;
-        }
-        #musicPlayer .disc i {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 0.6rem;
         }
 
         #musicPlayer .info {
@@ -579,14 +574,14 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== NUEVO REPRODUCTOR DE MÚSICA (estilo disco de vinilo) ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
     <div id="musicPlayer">
         <div class="disc" id="disc">
             <div class="center"></div>
         </div>
         <div class="info">
             <span class="title">🎵 Dulce Sueño</span>
-            <span class="artist">Canción de cuna</span>
+            <span class="artist">Brahms - Canción de cuna</span>
             <span class="status" id="musicStatus">● Reproduciendo</span>
         </div>
         <div class="controls">
@@ -684,11 +679,10 @@
 
     <script>
         // ============================================================
-        // 0. NUEVO REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
+        // 0. REPRODUCTOR DE MÚSICA (Brahms Lullaby - Canción de cuna)
         // ============================================================
-        // Usamos una canción de cuna clásica (Brahms Lullaby) en MP3
-        const audioSrc = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3?v=' + Date.now();
-        const audio = new Audio(audioSrc);
+        // Usamos un audio de Brahms Lullaby alojado en un servidor público confiable
+        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
         audio.loop = true;
         audio.volume = 0.7;
 
@@ -699,32 +693,47 @@
         const volumeSlider = document.getElementById('volumeSlider');
 
         let isPlaying = false;
+        let playAttempted = false;
 
         function playMusic() {
+            if (playAttempted) return;
+            playAttempted = true;
+            
             audio.play().then(() => {
                 isPlaying = true;
                 musicIcon.className = 'fa-solid fa-pause';
                 musicStatus.textContent = '● Reproduciendo';
                 disc.classList.remove('paused');
-            }).catch(() => {
+                musicStatus.style.color = '#27c93f';
+            }).catch((error) => {
+                console.log('Autoplay bloqueado:', error);
                 musicStatus.textContent = '⏸ Toca para iniciar';
                 musicIcon.className = 'fa-solid fa-play';
                 isPlaying = false;
                 disc.classList.add('paused');
+                musicStatus.style.color = '#a8848d';
+                playAttempted = false; // Permitir reintentar con clic
             });
         }
 
+        // Intentar reproducción automática al cargar
         window.addEventListener('load', function() {
             setTimeout(playMusic, 500);
         });
 
+        // Si el autoplay falla, se activa con el primer clic del usuario
         document.addEventListener('click', function firstInteraction() {
-            if (!isPlaying) {
+            if (!isPlaying && !playAttempted) {
+                playMusic();
+            } else if (!isPlaying && playAttempted) {
+                // Reintentar si falló antes
+                playAttempted = false;
                 playMusic();
             }
             document.removeEventListener('click', firstInteraction);
         }, { once: true });
 
+        // También permitir que el botón del reproductor inicie la música
         toggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (isPlaying) {
@@ -733,22 +742,30 @@
                 musicIcon.className = 'fa-solid fa-play';
                 musicStatus.textContent = '⏸ Pausado';
                 disc.classList.add('paused');
+                musicStatus.style.color = '#a8848d';
             } else {
+                playAttempted = false;
                 playMusic();
             }
         });
 
+        // Control de volumen
         volumeSlider.addEventListener('input', function(e) {
             audio.volume = parseFloat(e.target.value);
         });
 
-        audio.addEventListener('error', function() {
+        // Manejar errores de audio
+        audio.addEventListener('error', function(e) {
+            console.log('Error de audio:', e);
             musicStatus.textContent = '⏸ Error al cargar';
             musicIcon.className = 'fa-solid fa-play';
             isPlaying = false;
             disc.classList.add('paused');
+            musicStatus.style.color = '#e74c3c';
+            playAttempted = false;
         });
 
+        // Cuando el audio termina (por si acaso)
         audio.addEventListener('ended', function() {
             if (isPlaying) {
                 audio.play().catch(function() {});
