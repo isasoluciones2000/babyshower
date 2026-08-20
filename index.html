@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Baby Shower · Adara Bela ✨</title>
 
     <!-- Fuentes y Librerías -->
@@ -27,20 +27,20 @@
             --dorado: #c9a86a;
             --dorado-claro: #ead7ad;
             --texto: #6e5960;
-            --sombra: 0 20px 45px rgba(180, 112, 132, 0.20);
+            --sombra: 0 15px 35px rgba(180, 112, 132, 0.18);
         }
 
-        body {
+        html, body {
+            min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
             color: var(--texto);
-            min-height: 100vh;
-            background: radial-gradient(circle at 10% 20%, rgba(247, 201, 212, 0.35), transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(234, 215, 173, 0.30), transparent 35%),
+            background: radial-gradient(circle at 10% 20%, rgba(247, 201, 212, 0.30), transparent 45%),
+                        radial-gradient(circle at 90% 80%, rgba(234, 215, 173, 0.25), transparent 40%),
                         var(--crema);
             overflow-x: hidden;
         }
 
-        /* Fondo animado con burbujas */
+        /* Burbujas fijas */
         .bubbles {
             position: fixed;
             top: 0;
@@ -55,106 +55,114 @@
         .bubble {
             position: absolute;
             bottom: -80px;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.45);
             border-radius: 50%;
-            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.7);
             animation: rise linear infinite;
         }
 
         @keyframes rise {
-            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0.6; }
-            100% { transform: translateY(-110vh) scale(1.2) rotate(720deg); opacity: 0.1; }
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0.5; }
+            100% { transform: translateY(-110vh) scale(1.1) rotate(720deg); opacity: 0.05; }
         }
 
         .container {
             position: relative;
             z-index: 2;
-            width: min(94%, 680px);
+            width: 100%;
+            max-width: 580px;
             margin: 0 auto;
-            padding: 20px 0 40px;
+            padding: 12px 14px 25px;
         }
 
-        /* Tarjetas con efecto vidrio y animación */
+        /* Tarjetas compactas y responsivas */
         .card {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-radius: 32px;
-            padding: 28px 22px;
-            margin: 26px 0;
-            box-shadow: var(--sombra), 0 0 0 1px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            transition: transform 0.3s ease, box-shadow 0.4s ease;
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 18px 16px;
+            margin: 14px 0;
+            box-shadow: var(--sombra), 0 0 0 1px rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: transform 0.2s ease;
         }
 
-        .card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 30px 55px rgba(180, 112, 132, 0.25);
+        .card:active {
+            transform: scale(0.99);
         }
 
+        /* HERO - más compacto */
         .hero {
             text-align: center;
-            padding: 35px 10px 25px;
-            position: relative;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.7), transparent 60%);
+            padding: 18px 8px 12px;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), transparent 60%);
         }
 
         .baby-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 15px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 8px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(145deg, #ffffff, #fce7ed);
-            border: 3px solid var(--dorado-claro);
-            box-shadow: 0 0 0 8px rgba(247, 201, 212, 0.3), var(--sombra);
+            border: 2.5px solid var(--dorado-claro);
+            box-shadow: 0 0 0 5px rgba(247, 201, 212, 0.25), var(--sombra);
             animation: floatIcon 3s ease-in-out infinite;
         }
 
         @keyframes floatIcon {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
         }
 
         .baby-icon i {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             color: var(--rosa-oscuro);
             animation: pulseIcon 2s infinite;
         }
 
         @keyframes pulseIcon {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.12); }
         }
 
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: clamp(4.5rem, 16vw, 7rem);
-            line-height: 0.9;
-            text-shadow: 0 5px 25px rgba(201, 119, 141, 0.2);
-            margin-top: 5px;
+            font-size: clamp(3.2rem, 12vw, 4.8rem);
+            line-height: 0.95;
+            margin-top: 2px;
+            text-shadow: 0 3px 15px rgba(201, 119, 141, 0.15);
+        }
+
+        .tiny-title {
+            color: var(--dorado);
+            text-transform: uppercase;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            margin-bottom: 4px;
         }
 
         .subtitle {
             font-family: 'Playfair Display', serif;
             color: #a98463;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-top: 15px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-top: 8px;
         }
 
         .parents {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 28px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(201, 168, 106, 0.4);
-            border-radius: 60px;
-            font-size: 0.9rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            margin-top: 12px;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(201, 168, 106, 0.3);
+            border-radius: 40px;
+            font-size: 0.75rem;
             backdrop-filter: blur(4px);
         }
 
@@ -162,15 +170,16 @@
             color: var(--rosa-oscuro);
         }
 
+        /* Secciones */
         .section-heading {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .icon-circle {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 12px;
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 6px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -178,112 +187,103 @@
             background: linear-gradient(135deg, #fff5f7, #fde8ef);
             color: var(--rosa-oscuro);
             border: 1px solid #f7d5de;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 20px rgba(201, 119, 141, 0.15);
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(201, 119, 141, 0.12);
         }
 
         .section-heading h2 {
             font-family: 'Playfair Display', serif;
             color: #98745a;
-            font-size: 1.7rem;
+            font-size: 1.2rem;
         }
 
         .section-heading p {
-            font-size: 0.9rem;
+            font-size: 0.78rem;
             color: #7f6a70;
+            margin-top: 2px;
         }
 
-        /* Countdown */
+        /* Countdown responsive */
         .countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 6px;
         }
 
         .count-box {
             background: linear-gradient(145deg, #ffffff, #fff4f7);
-            border-radius: 22px;
-            padding: 18px 5px;
+            border-radius: 16px;
+            padding: 12px 2px;
             text-align: center;
             border: 1px solid #f6dce3;
-            box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.8), 0 8px 18px rgba(201, 119, 141, 0.08);
-            transition: transform 0.2s;
-        }
-
-        .count-box:hover {
-            transform: translateY(-4px);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), 0 6px 14px rgba(201, 119, 141, 0.06);
         }
 
         .count-box span {
             display: block;
             color: var(--rosa-oscuro);
             font-weight: 800;
-            font-size: clamp(1.8rem, 7vw, 2.6rem);
-            letter-spacing: 1px;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            letter-spacing: 0.5px;
         }
 
         .count-box small {
             display: block;
-            margin-top: 6px;
-            font-size: 0.65rem;
+            margin-top: 3px;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #a8848d;
         }
 
-        /* Info */
+        /* Info items */
         .event-info {
             display: grid;
-            gap: 14px;
+            gap: 8px;
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 16px 18px;
-            background: rgba(255, 250, 248, 0.7);
-            border-radius: 20px;
+            gap: 12px;
+            padding: 10px 12px;
+            background: rgba(255, 250, 248, 0.6);
+            border-radius: 16px;
             border: 1px solid #f5e6dc;
-            transition: background 0.2s;
-        }
-
-        .info-item:hover {
-            background: rgba(255, 245, 240, 0.9);
         }
 
         .info-icon {
-            min-width: 52px;
-            height: 52px;
-            border-radius: 16px;
+            min-width: 38px;
+            height: 38px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(145deg, #fbe0e6, #fff3e5);
             color: var(--rosa-oscuro);
-            font-size: 1.3rem;
+            font-size: 1rem;
         }
 
         .info-item strong {
             display: block;
             color: #876970;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 2px;
         }
 
         .info-item span {
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.75rem;
+            line-height: 1.4;
         }
 
         /* Mapa */
         .map-container {
-            margin: 18px 0 10px;
-            border-radius: 20px;
+            margin: 10px 0 6px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            height: 220px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            height: 170px;
         }
 
         .map-container iframe {
@@ -299,103 +299,112 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 16px 20px;
-            margin-top: 16px;
+            gap: 8px;
+            padding: 12px 14px;
+            margin-top: 10px;
             border: none;
-            border-radius: 18px;
+            border-radius: 14px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 0.95rem;
-            transition: all 0.25s ease;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
             text-decoration: none;
-            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 30px rgba(0,0,0,0.10);
+        .btn:active {
+            transform: scale(0.96);
         }
-        .btn:active { transform: scale(0.96); }
 
         .btn-map {
             color: white;
             background: linear-gradient(145deg, #d98b9f, #c9778d);
-            box-shadow: 0 10px 25px rgba(201, 119, 141, 0.30);
+            box-shadow: 0 6px 18px rgba(201, 119, 141, 0.25);
         }
 
         .btn-gift {
             color: #856338;
             background: linear-gradient(145deg, #f6e6bd, #e9cf91);
-            box-shadow: 0 10px 25px rgba(201, 168, 106, 0.25);
+            box-shadow: 0 6px 18px rgba(201, 168, 106, 0.20);
         }
 
         /* Yape */
         .gift-card {
             text-align: center;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 245, 235, 0.9), rgba(255, 242, 245, 0.8));
+            background: radial-gradient(circle at 20% 30%, rgba(255, 245, 235, 0.85), rgba(255, 242, 245, 0.75));
         }
 
         .gift-card h2 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: 3rem;
+            font-size: 2.4rem;
             font-weight: 400;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
+        }
+
+        .gift-card p {
+            font-size: 0.78rem;
+            line-height: 1.6;
         }
 
         .yape-box {
-            margin: 22px auto 8px;
-            padding: 22px 15px;
-            max-width: 380px;
-            border-radius: 28px;
+            margin: 14px auto 4px;
+            padding: 16px 12px;
+            max-width: 320px;
+            border-radius: 22px;
             background: rgba(255, 255, 255, 0.85);
             border: 2px dashed var(--dorado);
-            box-shadow: 0 8px 25px rgba(201, 168, 106, 0.15);
+            box-shadow: 0 6px 20px rgba(201, 168, 106, 0.12);
         }
 
         .yape-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             color: var(--dorado);
             font-weight: 800;
         }
 
         .yape-number {
-            margin-top: 10px;
-            font-size: clamp(1.8rem, 8vw, 2.4rem);
+            margin-top: 6px;
+            font-size: clamp(1.6rem, 7vw, 2.2rem);
             font-weight: 800;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             color: #80616a;
         }
 
         .copy-message {
-            min-height: 24px;
-            margin-top: 12px;
+            min-height: 20px;
+            margin-top: 8px;
             color: #a8844f;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
-        /* Footer */
+        /* Confirmación */
         .confirmation {
             text-align: center;
             background: linear-gradient(145deg, #f9dce3, #fff8ed);
+            padding: 16px;
         }
 
         .confirmation h3 {
             font-family: 'Playfair Display', serif;
             color: var(--rosa-oscuro);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+
+        .confirmation p {
+            font-size: 0.78rem;
+            line-height: 1.6;
         }
 
         footer {
             text-align: center;
-            padding: 20px 10px 10px;
-            font-size: 0.8rem;
+            padding: 12px 8px 4px;
+            font-size: 0.65rem;
             color: #a68b92;
             opacity: 0.8;
         }
@@ -408,36 +417,45 @@
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.4); }
+            50% { transform: scale(1.3); }
         }
 
-        /* Animación reveal */
+        /* Reveal más rápido */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            animation: reveal 0.9s forwards;
+            transform: translateY(18px);
+            animation: reveal 0.6s forwards;
         }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.25s; }
-        .delay-3 { animation-delay: 0.40s; }
-        .delay-4 { animation-delay: 0.55s; }
-        .delay-5 { animation-delay: 0.70s; }
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.15s; }
+        .delay-3 { animation-delay: 0.25s; }
+        .delay-4 { animation-delay: 0.35s; }
 
         @keyframes reveal {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 480px) {
-            .card { padding: 20px 14px; }
-            .countdown { gap: 6px; }
-            .count-box { padding: 12px 2px; }
-            .map-container { height: 170px; }
+        /* Ajustes extra para pantallas muy pequeñas */
+        @media (max-width: 380px) {
+            .container { padding: 8px 10px 15px; }
+            .card { padding: 14px 12px; margin: 10px 0; }
+            .count-box { padding: 8px 2px; }
+            .map-container { height: 140px; }
+            .hero h1 { font-size: 2.8rem; }
+            .baby-icon { width: 60px; height: 60px; }
+            .baby-icon i { font-size: 1.8rem; }
+        }
+
+        @media (min-width: 600px) {
+            .container { padding: 20px 20px 30px; }
+            .card { padding: 24px 22px; margin: 18px 0; }
+            .map-container { height: 220px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Burbujas decorativas -->
+    <!-- Burbujas de fondo -->
     <div class="bubbles" id="bubbleContainer"></div>
 
     <main class="container">
@@ -447,9 +465,7 @@
             <div class="baby-icon">
                 <i class="fa-solid fa-baby"></i>
             </div>
-            <p class="tiny-title" style="color:var(--dorado); text-transform:uppercase; font-size:0.75rem; font-weight:800; letter-spacing:3px; margin-bottom:8px;">
-                ♡ Muy pronto llegará una princesa ♡
-            </p>
+            <p class="tiny-title">♡ Muy pronto llegará una princesa ♡</p>
             <h1>Adara Bela</h1>
             <p class="subtitle">
                 Pequeños milagros que llegan para llenar<br>
@@ -480,7 +496,7 @@
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-calendar-heart"></i></div>
                 <h2>Reserva esta fecha</h2>
-                <p>Queremos compartir este momento tan especial contigo.</p>
+                <p>Queremos compartir este momento tan especial.</p>
             </div>
 
             <div class="event-info">
@@ -498,7 +514,7 @@
                 </div>
             </div>
 
-            <!-- MAPA EMBEBIDO (Google Maps) -->
+            <!-- Mapa embebido -->
             <div class="map-container">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3882.8328464717314!2d-71.90393208465252!3d-13.542140490226942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x916e7f001d2ab971%3A0xe87850b0ec331171!2sResidencial%20Sumaq%20Wasi!5e0!3m2!1ses!2spe!4v1742420000000!5m2!1ses!2spe" 
@@ -531,8 +547,8 @@
 
         <!-- CIERRE -->
         <section class="card confirmation reveal delay-4">
-            <div class="baby-icon" style="width:80px;height:80px;margin:0 auto 15px;">
-                <i class="fa-solid fa-heart" style="font-size:2rem;"></i>
+            <div class="baby-icon" style="width:60px;height:60px;margin:0 auto 8px;">
+                <i class="fa-solid fa-heart" style="font-size:1.6rem;"></i>
             </div>
             <h3>¡Tu presencia hará este día aún más especial!</h3>
             <p>Estamos muy felices de celebrar la llegada de nuestra pequeña <strong>Adara Bela</strong> junto a las personas que queremos.</p>
@@ -545,21 +561,21 @@
 
     <script>
         // ===========================================
-        // BURBUJAS
+        // BURBUJAS (más ligeras para móvil)
         // ===========================================
         (function createBubbles() {
             const container = document.getElementById('bubbleContainer');
-            const count = 14;
+            const count = 10;
             for (let i = 0; i < count; i++) {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
-                const size = 20 + Math.random() * 50;
+                const size = 15 + Math.random() * 35;
                 bubble.style.width = size + 'px';
                 bubble.style.height = size + 'px';
                 bubble.style.left = Math.random() * 100 + '%';
-                bubble.style.animationDuration = 12 + Math.random() * 18 + 's';
-                bubble.style.animationDelay = Math.random() * 15 + 's';
-                bubble.style.opacity = 0.25 + Math.random() * 0.3;
+                bubble.style.animationDuration = 14 + Math.random() * 16 + 's';
+                bubble.style.animationDelay = Math.random() * 12 + 's';
+                bubble.style.opacity = 0.2 + Math.random() * 0.25;
                 container.appendChild(bubble);
             }
         })();
@@ -586,8 +602,8 @@
                 if (!celebrationLaunched) {
                     celebrationLaunched = true;
                     if (typeof confetti === 'function') {
-                        confetti({ particleCount: 200, spread: 110, origin: { y: 0.5 } });
-                        setTimeout(() => confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } }), 300);
+                        confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
+                        setTimeout(() => confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }), 250);
                     }
                 }
                 return;
@@ -631,27 +647,27 @@
                 copyMessage.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Número copiado!';
                 copyButton.innerHTML = '<i class="fa-solid fa-check"></i> ¡Listo!';
                 if (typeof confetti === 'function') {
-                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                    confetti({ particleCount: 40, spread: 50, origin: { y: 0.7 } });
                 }
                 setTimeout(() => {
                     copyButton.innerHTML = '<i class="fa-regular fa-copy"></i> Copiar número';
                     copyMessage.textContent = '';
-                }, 2800);
+                }, 2500);
             } catch (error) {
                 copyMessage.textContent = 'Número: ' + yapeNumber;
             }
         });
 
         // ===========================================
-        // CONFETTI DE BIENVENIDA
+        // CONFETTI DE BIENVENIDA (más sutil)
         // ===========================================
         window.addEventListener('load', function() {
             setTimeout(() => {
                 if (typeof confetti === 'function') {
-                    confetti({ particleCount: 40, angle: 60, spread: 55, origin: { x: 0 } });
-                    confetti({ particleCount: 40, angle: 120, spread: 55, origin: { x: 1 } });
+                    confetti({ particleCount: 25, angle: 60, spread: 45, origin: { x: 0 } });
+                    confetti({ particleCount: 25, angle: 120, spread: 45, origin: { x: 1 } });
                 }
-            }, 700);
+            }, 600);
         });
     </script>
 
