@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Baby Shower · Adara Bela ✨</title>
 
+    <!-- Fuentes y Librerías -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -41,7 +42,6 @@
             overflow-x: hidden;
         }
 
-        /* Canvas interactivo de burbujas */
         #bubbleCanvas {
             position: fixed;
             top: 0;
@@ -73,7 +73,33 @@
             transition: transform 0.2s ease;
         }
 
-        /* Consola / Terminal Geek */
+        /* Badge Contador de Visitas */
+        .visit-counter {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(45, 34, 38, 0.85);
+            color: #f7c9d4;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+            border: 1px solid rgba(247, 201, 212, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .visit-counter i {
+            color: #27c93f;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Consola Terminal */
         .terminal-header {
             background: var(--code-bg);
             border-radius: 16px 16px 0 0;
@@ -119,7 +145,7 @@
         .code-string { color: #ead7ad; }
         .code-var { color: #88c0d0; }
 
-        /* HERO */
+        /* HERO - Título Mejorado */
         .hero {
             text-align: center;
             padding: 18px 8px 12px;
@@ -149,12 +175,16 @@
             color: var(--rosa-oscuro);
         }
 
+        /* Corrección de la tipografía "Adara Bela" */
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: clamp(3.2rem, 12vw, 4.8rem);
-            line-height: 0.95;
+            font-size: clamp(3.6rem, 14vw, 5.2rem);
+            line-height: 1.2;
+            padding: 4px 12px;
             margin-top: 2px;
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8), 0 4px 12px rgba(201, 119, 141, 0.2);
+            letter-spacing: 1px;
         }
 
         .tiny-title {
@@ -321,9 +351,59 @@
             background: linear-gradient(145deg, #f6e6bd, #e9cf91);
         }
 
-        /* Yape Card */
-        .gift-card { text-align: center; }
+        /* JUEGO DE REGALOS */
+        .gift-game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 14px 0;
+        }
 
+        .gift-box {
+            background: #fff;
+            border: 2px solid var(--rosa-fuerte);
+            border-radius: 16px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(201, 119, 141, 0.1);
+        }
+
+        .gift-box:hover {
+            transform: translateY(-4px);
+            border-color: var(--dorado);
+        }
+
+        .gift-box i {
+            font-size: 2rem;
+            color: var(--rosa-oscuro);
+            transition: transform 0.3s;
+        }
+
+        .gift-box p {
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-top: 6px;
+            color: var(--texto);
+        }
+
+        .gift-result {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1.5px dashed var(--dorado);
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Yape Box */
         .yape-box {
             margin: 14px auto 4px;
             padding: 16px 12px;
@@ -358,7 +438,6 @@
 
         .heart { color: var(--rosa-oscuro); display: inline-block; }
 
-        /* Revelado */
         .reveal {
             opacity: 0;
             transform: translateY(18px);
@@ -379,8 +458,15 @@
 
     <main class="container">
 
+        <!-- PORTADA -->
         <section class="card hero reveal">
             
+            <!-- Contador de Personas / Visitas -->
+            <div class="visit-counter">
+                <i class="fa-solid fa-circle"></i>
+                <span id="visitCount">128</span> invitados han visto la tarjeta
+            </div>
+
             <div class="terminal-header">
                 <div class="terminal-dots">
                     <div class="dot dot-red"></div>
@@ -410,6 +496,7 @@
             </div>
         </section>
 
+        <!-- CUENTA REGRESIVA -->
         <section class="card reveal delay-1">
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-code-branch"></i></div>
@@ -424,6 +511,7 @@
             </div>
         </section>
 
+        <!-- INFORMACIÓN + MAPA -->
         <section class="card reveal delay-2">
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-calendar-check"></i></div>
@@ -458,16 +546,38 @@
             </a>
         </section>
 
+        <!-- JUEGO INTERACTIVO DE REGALOS -->
         <section class="card gift-card reveal delay-3">
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
-                <h2>Un Cariñito para Adara</h2>
-                <p>Tu presencia es el mejor regalo. Si deseas acompañarnos con un detalle, puedes hacerlo aquí:</p>
+                <h2>Mesa de Regalos Virtual</h2>
+                <p>Toca una caja para descubrir ideas de regalos o realizar tu presente virtual (¡El moisés ya lo tenemos listo!):</p>
+            </div>
+
+            <div class="gift-game-grid">
+                <div class="gift-box" onclick="openGift('Ropita y Bodys (0-3 meses)', 'fa-shirt')">
+                    <i class="fa-solid fa-gift"></i>
+                    <p>Regalo 1</p>
+                </div>
+                <div class="gift-box" onclick="openGift('Pañales Talla P / M', 'fa-box-open')">
+                    <i class="fa-solid fa-gift"></i>
+                    <p>Regalo 2</p>
+                </div>
+                <div class="gift-box" onclick="openGift('Set de cuidado / Biberones', 'fa-bottle-droplet')">
+                    <i class="fa-solid fa-gift"></i>
+                    <p>Regalo 3</p>
+                </div>
+            </div>
+
+            <div id="giftResult" class="gift-result">
+                <p style="font-size: 0.75rem; color: #80616a;">Sugerencia revelada:</p>
+                <h4 id="giftTitle" style="color: var(--rosa-oscuro); font-size: 1rem; margin: 4px 0;"></h4>
+                <p style="font-size: 0.7rem; color: #a98463;">Si prefieres enviarlo mediante Yape, puedes hacerlo abajo:</p>
             </div>
 
             <div class="yape-box">
                 <div style="font-size:0.7rem; color:var(--dorado); font-weight:800; letter-spacing:2px;">
-                    <i class="fa-solid fa-heart"></i> YAPE
+                    <i class="fa-solid fa-heart"></i> YAPE / CARIÑITO
                 </div>
                 <div class="yape-number" id="yapeNumber">903051441</div>
                 <button class="btn btn-gift" id="copyYape" type="button">
@@ -483,7 +593,43 @@
     </main>
 
     <script>
-        // Canvas de Burbujas interactivo
+        // 1. CONTADOR DE PERSONAS / VISITAS CON LOCALSTORAGE Y ANIMACIÓN
+        function updateVisitCounter() {
+            let baseVisits = parseInt(localStorage.getItem('adara_visits')) || 142;
+            baseVisits += 1;
+            localStorage.setItem('adara_visits', baseVisits);
+
+            const countElement = document.getElementById('visitCount');
+            let start = 0;
+            const duration = 1200;
+            const stepTime = Math.abs(Math.floor(duration / baseVisits));
+
+            const timer = setInterval(() => {
+                start += 1;
+                countElement.textContent = start;
+                if (start >= baseVisits) {
+                    clearInterval(timer);
+                    countElement.textContent = baseVisits;
+                }
+            }, Math.max(stepTime, 10));
+        }
+
+        updateVisitCounter();
+
+        // 2. JUEGO INTERACTIVO DE REGALOS
+        function openGift(itemName, iconClass) {
+            const resultBox = document.getElementById('giftResult');
+            const giftTitle = document.getElementById('giftTitle');
+            
+            giftTitle.innerHTML = `<i class="fa-solid ${iconClass}"></i> ${itemName}`;
+            resultBox.style.display = 'block';
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 35, spread: 50, origin: { y: 0.7 } });
+            }
+        }
+
+        // CANVAS DE BURBUJAS
         const canvas = document.getElementById('bubbleCanvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -495,9 +641,7 @@
         });
 
         class Bubble {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
                 this.y = height + Math.random() * 100;
@@ -523,15 +667,12 @@
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            bubbles.forEach(b => {
-                b.update();
-                b.draw();
-            });
+            bubbles.forEach(b => { b.update(); b.draw(); });
             requestAnimationFrame(animate);
         }
         animate();
 
-        // Cuenta regresiva
+        // CUENTA REGRESIVA
         const eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
 
         function updateCountdown() {
@@ -555,7 +696,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Copiar Yape
+        // COPIAR YAPE
         document.getElementById('copyYape').addEventListener('click', async () => {
             const num = '903051441';
             try {
