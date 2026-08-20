@@ -73,18 +73,18 @@
             transition: transform 0.2s ease;
         }
 
-        /* Badge Contador de Visitas */
+        /* Badge Contador de Visitas Global */
         .visit-counter {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(45, 34, 38, 0.85);
+            gap: 8px;
+            background: rgba(45, 34, 38, 0.88);
             color: #f7c9d4;
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 30px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            margin-bottom: 12px;
+            font-size: 0.72rem;
+            margin-bottom: 14px;
             border: 1px solid rgba(247, 201, 212, 0.3);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -139,13 +139,14 @@
             line-height: 1.6;
             margin-bottom: 16px;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+            text-align: left;
         }
 
         .code-keyword { color: #e5829b; }
         .code-string { color: #ead7ad; }
         .code-var { color: #88c0d0; }
 
-        /* HERO - Título Mejorado */
+        /* HERO - Tipografía Adara Adaptada */
         .hero {
             text-align: center;
             padding: 18px 8px 12px;
@@ -175,16 +176,15 @@
             color: var(--rosa-oscuro);
         }
 
-        /* Corrección de la tipografía "Adara Bela" */
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--rosa-oscuro);
-            font-size: clamp(3.6rem, 14vw, 5.2rem);
-            line-height: 1.2;
-            padding: 4px 12px;
+            font-size: clamp(3.8rem, 14vw, 5.4rem);
+            line-height: 1.25;
+            padding: 6px 14px;
             margin-top: 2px;
             text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8), 0 4px 12px rgba(201, 119, 141, 0.2);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         .tiny-title {
@@ -213,7 +213,7 @@
             font-size: 0.75rem;
         }
 
-        /* Secciones y Countdown */
+        /* Countdown */
         .section-heading {
             text-align: center;
             margin-bottom: 12px;
@@ -270,7 +270,7 @@
             color: #a8848d;
         }
 
-        /* Info items */
+        /* Info Items */
         .event-info {
             display: grid;
             gap: 8px;
@@ -378,7 +378,6 @@
         .gift-box i {
             font-size: 2rem;
             color: var(--rosa-oscuro);
-            transition: transform 0.3s;
         }
 
         .gift-box p {
@@ -461,10 +460,10 @@
         <!-- PORTADA -->
         <section class="card hero reveal">
             
-            <!-- Contador de Personas / Visitas -->
+            <!-- Contador de Personas / Visitas Global para GitHub Pages -->
             <div class="visit-counter">
                 <i class="fa-solid fa-circle"></i>
-                <span id="visitCount">128</span> invitados han visto la tarjeta
+                <span id="visitCount">...</span> personas han visto la invitación
             </div>
 
             <div class="terminal-header">
@@ -473,7 +472,7 @@
                     <div class="dot dot-yellow"></div>
                     <div class="dot dot-green"></div>
                 </div>
-                <div class="terminal-title">baby_init.js</div>
+                <div class="terminal-title">git checkout -b adara_bela</div>
             </div>
             <div class="terminal-body">
                 <span class="code-keyword">const</span> <span class="code-var">baby</span> = <span class="code-keyword">new</span> Baby({<br>
@@ -551,21 +550,21 @@
             <div class="section-heading">
                 <div class="icon-circle"><i class="fa-solid fa-gift"></i></div>
                 <h2>Mesa de Regalos Virtual</h2>
-                <p>Toca una caja para descubrir ideas de regalos o realizar tu presente virtual (¡El moisés ya lo tenemos listo!):</p>
+                <p>Toca una caja para descubrir ideas de regalos (¡El moisés ya lo tenemos listo!):</p>
             </div>
 
             <div class="gift-game-grid">
                 <div class="gift-box" onclick="openGift('Ropita y Bodys (0-3 meses)', 'fa-shirt')">
                     <i class="fa-solid fa-gift"></i>
-                    <p>Regalo 1</p>
+                    <p>Caja 1</p>
                 </div>
                 <div class="gift-box" onclick="openGift('Pañales Talla P / M', 'fa-box-open')">
                     <i class="fa-solid fa-gift"></i>
-                    <p>Regalo 2</p>
+                    <p>Caja 2</p>
                 </div>
                 <div class="gift-box" onclick="openGift('Set de cuidado / Biberones', 'fa-bottle-droplet')">
                     <i class="fa-solid fa-gift"></i>
-                    <p>Regalo 3</p>
+                    <p>Caja 3</p>
                 </div>
             </div>
 
@@ -593,30 +592,27 @@
     </main>
 
     <script>
-        // 1. CONTADOR DE PERSONAS / VISITAS CON LOCALSTORAGE Y ANIMACIÓN
-        function updateVisitCounter() {
-            let baseVisits = parseInt(localStorage.getItem('adara_visits')) || 142;
-            baseVisits += 1;
-            localStorage.setItem('adara_visits', baseVisits);
-
-            const countElement = document.getElementById('visitCount');
-            let start = 0;
-            const duration = 1200;
-            const stepTime = Math.abs(Math.floor(duration / baseVisits));
-
-            const timer = setInterval(() => {
-                start += 1;
-                countElement.textContent = start;
-                if (start >= baseVisits) {
-                    clearInterval(timer);
-                    countElement.textContent = baseVisits;
-                }
-            }, Math.max(stepTime, 10));
+        // 1. CONTADOR REAL DE VISITAS PÚBLICO (API Hits)
+        async function fetchGlobalVisits() {
+            try {
+                // Genera un contador basado en el repositorio de GitHub Pages
+                const namespace = "adara-bela-babyshower";
+                const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/visits/up`);
+                const data = await response.json();
+                
+                let count = data.count || 1;
+                document.getElementById('visitCount').textContent = count;
+            } catch (error) {
+                // Fallback por si la API falla o está offline
+                let localCount = parseInt(localStorage.getItem('adara_visits_fallback')) || 54;
+                localCount++;
+                localStorage.setItem('adara_visits_fallback', localCount);
+                document.getElementById('visitCount').textContent = localCount;
+            }
         }
+        fetchGlobalVisits();
 
-        updateVisitCounter();
-
-        // 2. JUEGO INTERACTIVO DE REGALOS
+        // 2. JUEGO DE REGALOS
         function openGift(itemName, iconClass) {
             const resultBox = document.getElementById('giftResult');
             const giftTitle = document.getElementById('giftTitle');
