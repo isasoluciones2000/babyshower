@@ -50,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* ===== NUEVO REPRODUCTOR DE MÚSICA (más visible y bonito) ===== */
+        /* ===== REPRODUCTOR DE MÚSICA RENOVADO ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -66,6 +66,7 @@
             align-items: center;
             gap: 14px;
             transition: all 0.3s ease;
+            min-width: 200px;
         }
         #musicPlayer:hover {
             transform: scale(1.04);
@@ -90,6 +91,7 @@
             display: flex;
             flex-direction: column;
             line-height: 1.2;
+            min-width: 80px;
         }
         #musicPlayer .music-title {
             font-weight: 700;
@@ -175,6 +177,7 @@
                 gap: 10px;
                 border-radius: 40px;
                 flex-wrap: wrap;
+                min-width: 160px;
             }
             #musicPlayer input[type="range"] {
                 width: 35px;
@@ -188,6 +191,9 @@
             #musicPlayer .controls button {
                 font-size: 1rem;
                 padding: 4px 8px;
+            }
+            #musicPlayer .music-info {
+                min-width: 60px;
             }
         }
 
@@ -612,7 +618,7 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== NUEVO REPRODUCTOR DE MÚSICA (diseño renovado) ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA RENOVADO ===== -->
     <div id="musicPlayer">
         <i class="fa-solid fa-music music-icon"></i>
         <div class="music-info">
@@ -713,7 +719,9 @@
         // ============================================================
         // 0. REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
         // ============================================================
-        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+        // Usamos un timestamp para evitar caché
+        const audioSrc = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3?v=' + Date.now();
+        const audio = new Audio(audioSrc);
         audio.loop = true;
         audio.volume = 0.7;
 
@@ -736,14 +744,22 @@
             });
         }
 
-        window.addEventListener('load', () => setTimeout(playMusic, 500));
+        // Intentar autoplay al cargar
+        window.addEventListener('load', function() {
+            setTimeout(playMusic, 500);
+        });
 
+        // Si el autoplay falla, se activa con el primer clic del usuario
         document.addEventListener('click', function firstInteraction() {
-            if (!isPlaying) playMusic();
+            if (!isPlaying) {
+                playMusic();
+            }
             document.removeEventListener('click', firstInteraction);
         }, { once: true });
 
-        toggleBtn.addEventListener('click', () => {
+        // Toggle play/pause
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             if (isPlaying) {
                 audio.pause();
                 isPlaying = false;
@@ -754,12 +770,23 @@
             }
         });
 
-        volumeSlider.addEventListener('input', (e) => audio.volume = parseFloat(e.target.value));
+        // Control de volumen
+        volumeSlider.addEventListener('input', function(e) {
+            audio.volume = parseFloat(e.target.value);
+        });
 
-        audio.addEventListener('error', () => {
+        // Manejar errores de audio
+        audio.addEventListener('error', function() {
             musicStatus.textContent = '🔇 Error al cargar';
             musicIcon.className = 'fa-solid fa-play';
             isPlaying = false;
+        });
+
+        // Cuando el audio termina (por si acaso)
+        audio.addEventListener('ended', function() {
+            if (isPlaying) {
+                audio.play().catch(function() {});
+            }
         });
 
         // ============================================================
@@ -792,7 +819,7 @@
         ];
 
         const giftListContainer = document.getElementById('giftList');
-        giftListData.forEach((gift) => {
+        giftListData.forEach(function(gift) {
             const item = document.createElement('div');
             item.className = 'gift-item';
             item.innerHTML = `
@@ -831,7 +858,7 @@
         const starCtx = starCanvas.getContext('2d');
         let starW = starCanvas.width = window.innerWidth;
         let starH = starCanvas.height = window.innerHeight;
-        window.addEventListener('resize', () => {
+        window.addEventListener('resize', function() {
             starW = starCanvas.width = window.innerWidth;
             starH = starCanvas.height = window.innerHeight;
         });
@@ -847,7 +874,7 @@
                 this.decay = 0.015 + Math.random() * 0.02;
                 this.rotation = Math.random() * Math.PI * 2;
                 this.rotSpeed = (Math.random() - 0.5) * 0.1;
-                this.color = `hsl(${330 + Math.random() * 30}, 70%, ${60 + 30 * Math.random()}%)`;
+                this.color = 'hsl(' + (330 + Math.random() * 30) + ', 70%, ' + (60 + 30 * Math.random()) + '%)';
             }
             update() {
                 this.x += this.speedX;
@@ -864,13 +891,13 @@
                 ctx.fillStyle = this.color;
                 ctx.shadowColor = '#c9778d';
                 ctx.shadowBlur = 15;
-                const spikes = 5;
-                const outer = this.size;
-                const inner = this.size * 0.4;
+                var spikes = 5;
+                var outer = this.size;
+                var inner = this.size * 0.4;
                 ctx.beginPath();
-                for (let i = 0; i < spikes * 2; i++) {
-                    const radius = i % 2 === 0 ? outer : inner;
-                    const angle = (i * Math.PI) / spikes - Math.PI / 2;
+                for (var i = 0; i < spikes * 2; i++) {
+                    var radius = i % 2 === 0 ? outer : inner;
+                    var angle = (i * Math.PI) / spikes - Math.PI / 2;
                     if (i === 0) ctx.moveTo(radius * Math.cos(angle), radius * Math.sin(angle));
                     else ctx.lineTo(radius * Math.cos(angle), radius * Math.sin(angle));
                 }
@@ -880,35 +907,36 @@
             }
         }
 
-        let stars = [];
+        var stars = [];
 
-        function createStars(x, y, count = 14) {
-            for (let i = 0; i < count; i++) {
+        function createStars(x, y, count) {
+            count = count || 14;
+            for (var i = 0; i < count; i++) {
                 stars.push(new Star(x + (Math.random() - 0.5) * 24, y + (Math.random() - 0.5) * 24));
             }
         }
 
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', function(e) {
             createStars(e.clientX, e.clientY);
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 12, spread: 30, origin: { x: e.clientX / window.innerWidth, y: e.clientY / window
-                            .innerHeight } });
+                confetti({ particleCount: 12, spread: 30, origin: { x: e.clientX / window.innerWidth, y: e.clientY /
+                        window.innerHeight } });
             }
         });
 
-        document.addEventListener('touchstart', (e) => {
-            const touch = e.touches[0];
+        document.addEventListener('touchstart', function(e) {
+            var touch = e.touches[0];
             createStars(touch.clientX, touch.clientY);
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 10, spread: 25, origin: { x: touch.clientX / window.innerWidth, y: touch.clientY /
-                            window.innerHeight } });
+                confetti({ particleCount: 10, spread: 25, origin: { x: touch.clientX / window.innerWidth, y: touch
+                        .clientY / window.innerHeight } });
             }
         }, { passive: true });
 
         function animateStars() {
             starCtx.clearRect(0, 0, starW, starH);
-            stars = stars.filter(s => s.life > 0);
-            stars.forEach(s => { s.update();
+            stars = stars.filter(function(s) { return s.life > 0; });
+            stars.forEach(function(s) { s.update();
                 s.draw(starCtx); });
             requestAnimationFrame(animateStars);
         }
@@ -917,42 +945,46 @@
         // ============================================================
         // 4. BURBUJAS DE FONDO
         // ============================================================
-        const canvas = document.getElementById('bubbleCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-        window.addEventListener('resize', () => {
+        var canvas = document.getElementById('bubbleCanvas');
+        var ctx = canvas.getContext('2d');
+        var width = canvas.width = window.innerWidth;
+        var height = canvas.height = window.innerHeight;
+        window.addEventListener('resize', function() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         });
 
-        class Bubble {
-            constructor() { this.reset(); }
-            reset() {
+        function Bubble() {
+            this.reset = function() {
                 this.x = Math.random() * width;
                 this.y = height + Math.random() * 100;
                 this.radius = 4 + Math.random() * 12;
                 this.speed = 0.5 + Math.random() * 1.2;
                 this.alpha = 0.2 + Math.random() * 0.3;
-            }
-            update() {
+            };
+            this.reset();
+            this.update = function() {
                 this.y -= this.speed;
                 if (this.y < -20) this.reset();
-            }
-            draw() {
+            };
+            this.draw = function() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(247, 201, 212, ${this.alpha})`;
+                ctx.fillStyle = 'rgba(247, 201, 212, ' + this.alpha + ')';
                 ctx.fill();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha + 0.2})`;
+                ctx.strokeStyle = 'rgba(255, 255, 255, ' + (this.alpha + 0.2) + ')';
                 ctx.stroke();
-            }
+            };
         }
-        const bubbles = Array.from({ length: 22 }, () => new Bubble());
+
+        var bubbles = [];
+        for (var i = 0; i < 22; i++) {
+            bubbles.push(new Bubble());
+        }
 
         function animateBubbles() {
             ctx.clearRect(0, 0, width, height);
-            bubbles.forEach(b => { b.update();
+            bubbles.forEach(function(b) { b.update();
                 b.draw(); });
             requestAnimationFrame(animateBubbles);
         }
@@ -961,10 +993,10 @@
         // ============================================================
         // 5. CUENTA REGRESIVA
         // ============================================================
-        const eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
-        setInterval(() => {
-            const now = Date.now();
-            const dist = eventDate - now;
+        var eventDate = new Date('2026-08-23T18:00:00-05:00').getTime();
+        setInterval(function() {
+            var now = Date.now();
+            var dist = eventDate - now;
             if (dist <= 0) {
                 document.getElementById('days').textContent = '00';
                 document.getElementById('hours').textContent = '00';
@@ -972,25 +1004,26 @@
                 document.getElementById('seconds').textContent = '00';
                 return;
             }
-            document.getElementById('days').textContent = String(Math.floor(dist / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById('hours').textContent = String(Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 *
-            60))).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)))
-            .padStart(2, '0');
-            document.getElementById('seconds').textContent = String(Math.floor((dist % (1000 * 60)) / 1000)).padStart(2,
+            document.getElementById('days').textContent = String(Math.floor(dist / (1000 * 60 * 60 * 24))).padStart(2,
             '0');
+            document.getElementById('hours').textContent = String(Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 *
+                60 * 60))).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(Math.floor((dist % (1000 * 60 * 60)) / (1000 *
+                60))).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(Math.floor((dist % (1000 * 60)) / 1000)).padStart(
+                2, '0');
         }, 1000);
 
         // ============================================================
         // 6. COPIAR YAPE
         // ============================================================
-        document.getElementById('copyYape').addEventListener('click', async () => {
-            const num = '903051441';
+        document.getElementById('copyYape').addEventListener('click', async function() {
+            var num = '903051441';
             try {
                 await navigator.clipboard.writeText(num);
                 document.getElementById('copyMessage').innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
                 if (typeof confetti === 'function') confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
-                setTimeout(() => document.getElementById('copyMessage').textContent = '', 2500);
+                setTimeout(function() { document.getElementById('copyMessage').textContent = ''; }, 2500);
             } catch (err) {
                 document.getElementById('copyMessage').textContent = 'Número: ' + num;
             }
@@ -999,12 +1032,12 @@
         // ============================================================
         // 7. SELECCIÓN DE REGALO → WHATSAPP
         // ============================================================
-        const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
         function playLullaby() {
             try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                var osc = audioCtx.createOscillator();
+                var gain = audioCtx.createGain();
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.type = 'sine';
@@ -1016,10 +1049,10 @@
             } catch (e) {}
         }
 
-        let selectedGifts = JSON.parse(localStorage.getItem('adara_selected_gifts') || '[]');
+        var selectedGifts = JSON.parse(localStorage.getItem('adara_selected_gifts') || '[]');
 
-        document.querySelectorAll('.btn-select').forEach(btn => {
-            const giftName = btn.getAttribute('data-gift');
+        document.querySelectorAll('.btn-select').forEach(function(btn) {
+            var giftName = btn.getAttribute('data-gift');
             if (selectedGifts.includes(giftName)) {
                 btn.textContent = '✓ Elegido';
                 btn.classList.add('elegido');
@@ -1028,18 +1061,20 @@
 
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const gift = this.getAttribute('data-gift');
+                var gift = this.getAttribute('data-gift');
                 if (this.classList.contains('elegido')) return;
 
                 if (typeof confetti === 'function') {
                     confetti({ particleCount: 70, spread: 90, origin: { y: 0.4 } });
-                    setTimeout(() => confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } }), 200);
-                    setTimeout(() => confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } }), 400);
+                    setTimeout(function() { confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } }); },
+                    200);
+                    setTimeout(function() { confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } }); },
+                    400);
                 }
 
                 playLullaby();
 
-                const rect = this.getBoundingClientRect();
+                var rect = this.getBoundingClientRect();
                 createStars(rect.left + rect.width / 2, rect.top + rect.height / 2, 22);
 
                 this.textContent = '✓ Elegido';
@@ -1051,9 +1086,10 @@
                     localStorage.setItem('adara_selected_gifts', JSON.stringify(selectedGifts));
                 }
 
-                const msg = encodeURIComponent(`¡Hola Heiner y Loedir! 👋 Me encantaría regalarles para Adara Bela: ${gift}`);
-                setTimeout(() => {
-                    window.open(`https://wa.me/51903051441?text=${msg}`, '_blank');
+                var msg = encodeURIComponent(
+                    '¡Hola Heiner y Loedir! 👋 Me encantaría regalarles para Adara Bela: ' + gift);
+                setTimeout(function() {
+                    window.open('https://wa.me/51903051441?text=' + msg, '_blank');
                 }, 600);
             });
         });
@@ -1061,8 +1097,8 @@
         // ============================================================
         // 8. CONFETTI DE BIENVENIDA
         // ============================================================
-        window.addEventListener('load', () => {
-            setTimeout(() => {
+        window.addEventListener('load', function() {
+            setTimeout(function() {
                 if (typeof confetti === 'function') {
                     confetti({ particleCount: 25, angle: 60, spread: 50, origin: { x: 0 } });
                     confetti({ particleCount: 25, angle: 120, spread: 50, origin: { x: 1 } });
@@ -1070,5 +1106,6 @@
             }, 700);
         });
     </script>
+
 </body>
 </html>
