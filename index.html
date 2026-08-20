@@ -50,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA ===== */
+        /* ===== REPRODUCTOR DE MÚSICA (YouTube) ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -58,53 +58,34 @@
             z-index: 999;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
-            border-radius: 50px;
-            padding: 10px 18px;
+            border-radius: 16px;
+            padding: 12px 16px;
             box-shadow: 0 8px 32px rgba(201, 119, 141, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
+            max-width: 280px;
+            min-width: 200px;
         }
         #musicPlayer:hover {
             transform: scale(1.03);
             box-shadow: 0 12px 40px rgba(201, 119, 141, 0.3);
         }
 
-        #musicPlayer .disc {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 35%, #555, #1a1a1a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        #musicPlayer .yt-icon {
+            font-size: 1.5rem;
+            color: #ff0000;
             flex-shrink: 0;
-            animation: spinDisc 3s linear infinite;
-            animation-play-state: running;
-        }
-        #musicPlayer .disc.paused {
-            animation-play-state: paused;
-        }
-        @keyframes spinDisc {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #musicPlayer .disc .center {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 40%, #fff, #ccc);
-            border: 2px solid #999;
         }
 
         #musicPlayer .info {
             display: flex;
             flex-direction: column;
             line-height: 1.2;
-            min-width: 70px;
+            min-width: 60px;
+            flex: 1;
         }
         #musicPlayer .info .title {
             font-weight: 700;
@@ -125,6 +106,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            flex-shrink: 0;
         }
         #musicPlayer .controls button {
             background: none;
@@ -191,16 +173,13 @@
                 right: 10px;
                 padding: 8px 12px;
                 gap: 8px;
-                border-radius: 40px;
+                border-radius: 12px;
+                max-width: 220px;
+                min-width: 160px;
                 flex-wrap: wrap;
             }
-            #musicPlayer .disc {
-                width: 30px;
-                height: 30px;
-            }
-            #musicPlayer .disc .center {
-                width: 8px;
-                height: 8px;
+            #musicPlayer .yt-icon {
+                font-size: 1.2rem;
             }
             #musicPlayer .info .title {
                 font-size: 0.6rem;
@@ -215,6 +194,18 @@
             #musicPlayer .info {
                 min-width: 50px;
             }
+        }
+
+        /* ===== REPRODUCTOR DE YOUTUBE EMBEBIDO (oculto) ===== */
+        #ytPlayer {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -574,23 +565,29 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
+    <!-- ===== REPRODUCTOR DE YOUTUBE OCULTO ===== -->
+    <iframe id="ytPlayer" 
+            src="https://www.youtube.com/embed/cHKAsxizhAI?autoplay=0&loop=1&playlist=cHKAsxizhAI&controls=0&showinfo=0&rel=0&mute=0" 
+            title="YouTube reproductor" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+
+    <!-- ===== REPRODUCTOR DE MÚSICA (CONTROL VISUAL) ===== -->
     <div id="musicPlayer">
-        <div class="disc" id="disc">
-            <div class="center"></div>
-        </div>
+        <i class="fa-brands fa-youtube yt-icon"></i>
         <div class="info">
-            <span class="title">🎵 Dulce Sueño</span>
-            <span class="artist">Brahms - Canción de cuna</span>
-            <span class="status" id="musicStatus">● Reproduciendo</span>
+            <span class="title">🎵 Canción de cuna</span>
+            <span class="artist">Brahms Lullaby</span>
+            <span class="status" id="musicStatus">⏸ Tocá para iniciar</span>
         </div>
         <div class="controls">
-            <button id="toggleMusic" title="Pausar/Reanudar">
-                <i class="fa-solid fa-pause" id="musicIcon"></i>
+            <button id="toggleMusic" title="Reproducir/Pausar">
+                <i class="fa-solid fa-play" id="musicIcon"></i>
             </button>
             <div class="volume-wrap">
                 <i class="fa-solid fa-volume-low"></i>
-                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
             </div>
         </div>
     </div>
@@ -679,98 +676,88 @@
 
     <script>
         // ============================================================
-        // 0. REPRODUCTOR DE MÚSICA (Brahms Lullaby - Canción de cuna)
+        // 0. REPRODUCTOR DE MÚSICA (YouTube)
         // ============================================================
-        // Usamos un audio de Brahms Lullaby alojado en un servidor público confiable
-        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-        audio.loop = true;
-        audio.volume = 0.7;
-
-        const disc = document.getElementById('disc');
+        const ytPlayer = document.getElementById('ytPlayer');
         const toggleBtn = document.getElementById('toggleMusic');
         const musicIcon = document.getElementById('musicIcon');
         const musicStatus = document.getElementById('musicStatus');
         const volumeSlider = document.getElementById('volumeSlider');
 
         let isPlaying = false;
-        let playAttempted = false;
+        let playerReady = false;
 
-        function playMusic() {
-            if (playAttempted) return;
-            playAttempted = true;
-            
-            audio.play().then(() => {
-                isPlaying = true;
-                musicIcon.className = 'fa-solid fa-pause';
-                musicStatus.textContent = '● Reproduciendo';
-                disc.classList.remove('paused');
-                musicStatus.style.color = '#27c93f';
-            }).catch((error) => {
-                console.log('Autoplay bloqueado:', error);
-                musicStatus.textContent = '⏸ Toca para iniciar';
-                musicIcon.className = 'fa-solid fa-play';
-                isPlaying = false;
-                disc.classList.add('paused');
-                musicStatus.style.color = '#a8848d';
-                playAttempted = false; // Permitir reintentar con clic
-            });
+        // Función para controlar el reproductor de YouTube
+        function controlYoutube(action) {
+            try {
+                // Usamos la API de YouTube para controlar el iframe
+                const iframe = ytPlayer;
+                const src = iframe.src;
+                
+                if (action === 'play') {
+                    // Recargamos el iframe con autoplay activado
+                    const baseSrc = src.split('?')[0];
+                    const params = new URLSearchParams(src.split('?')[1] || '');
+                    params.set('autoplay', '1');
+                    params.set('mute', '0');
+                    iframe.src = baseSrc + '?' + params.toString();
+                    isPlaying = true;
+                    musicIcon.className = 'fa-solid fa-pause';
+                    musicStatus.textContent = '● Reproduciendo';
+                    musicStatus.style.color = '#27c93f';
+                } else if (action === 'pause') {
+                    // Para pausar, recargamos sin autoplay
+                    const baseSrc = src.split('?')[0];
+                    const params = new URLSearchParams(src.split('?')[1] || '');
+                    params.set('autoplay', '0');
+                    params.set('mute', '0');
+                    iframe.src = baseSrc + '?' + params.toString();
+                    isPlaying = false;
+                    musicIcon.className = 'fa-solid fa-play';
+                    musicStatus.textContent = '⏸ Pausado';
+                    musicStatus.style.color = '#a8848d';
+                }
+            } catch (e) {
+                console.log('Error controlando YouTube:', e);
+            }
         }
 
-        // Intentar reproducción automática al cargar
-        window.addEventListener('load', function() {
-            setTimeout(playMusic, 500);
+        // Toggle play/pause
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isPlaying) {
+                controlYoutube('pause');
+            } else {
+                controlYoutube('play');
+            }
         });
 
-        // Si el autoplay falla, se activa con el primer clic del usuario
+        // Control de volumen (se aplica al iframe)
+        volumeSlider.addEventListener('input', function(e) {
+            const vol = parseInt(e.target.value);
+            try {
+                // Intentamos enviar el volumen al iframe
+                const iframe = ytPlayer;
+                const src = iframe.src;
+                const baseSrc = src.split('?')[0];
+                const params = new URLSearchParams(src.split('?')[1] || '');
+                params.set('volume', vol);
+                iframe.src = baseSrc + '?' + params.toString();
+            } catch (e) {
+                console.log('Error ajustando volumen:', e);
+            }
+        });
+
+        // Iniciar con un clic en cualquier parte (para cumplir políticas de autoplay)
         document.addEventListener('click', function firstInteraction() {
-            if (!isPlaying && !playAttempted) {
-                playMusic();
-            } else if (!isPlaying && playAttempted) {
-                // Reintentar si falló antes
-                playAttempted = false;
-                playMusic();
+            if (!isPlaying) {
+                controlYoutube('play');
             }
             document.removeEventListener('click', firstInteraction);
         }, { once: true });
 
-        // También permitir que el botón del reproductor inicie la música
-        toggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                musicIcon.className = 'fa-solid fa-play';
-                musicStatus.textContent = '⏸ Pausado';
-                disc.classList.add('paused');
-                musicStatus.style.color = '#a8848d';
-            } else {
-                playAttempted = false;
-                playMusic();
-            }
-        });
-
-        // Control de volumen
-        volumeSlider.addEventListener('input', function(e) {
-            audio.volume = parseFloat(e.target.value);
-        });
-
-        // Manejar errores de audio
-        audio.addEventListener('error', function(e) {
-            console.log('Error de audio:', e);
-            musicStatus.textContent = '⏸ Error al cargar';
-            musicIcon.className = 'fa-solid fa-play';
-            isPlaying = false;
-            disc.classList.add('paused');
-            musicStatus.style.color = '#e74c3c';
-            playAttempted = false;
-        });
-
-        // Cuando el audio termina (por si acaso)
-        audio.addEventListener('ended', function() {
-            if (isPlaying) {
-                audio.play().catch(function() {});
-            }
-        });
+        // También podemos iniciar con el botón
+        // ============================================================
 
         // ============================================================
         // 1. CONTADOR DE VISITAS
