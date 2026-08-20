@@ -1,0 +1,803 @@
+<?php
+// Invitación Digital - Baby Shower de Adara Bela
+// Todo el contenido, estilos y scripts están integrados en este único archivo.
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8cbd5">
+    <meta name="description" content="Invitación al Baby Shower de Adara Bela">
+
+    <title>Baby Shower | Adara Bela</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --rosa: #f7c9d4;
+            --rosa-fuerte: #eaa4b7;
+            --rosa-oscuro: #c9778d;
+            --crema: #fff9f3;
+            --blanco: #ffffff;
+            --dorado: #c9a86a;
+            --dorado-claro: #ead7ad;
+            --texto: #6e5960;
+            --sombra: 0 15px 40px rgba(180, 112, 132, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--texto);
+            background:
+                radial-gradient(circle at top left, rgba(247, 201, 212, 0.45), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(234, 215, 173, 0.28), transparent 30%),
+                var(--crema);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Fondo decorativo */
+        .floating-shape {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 140px;
+            height: 140px;
+            background: #f8cdd7;
+            top: 5%;
+            left: -55px;
+        }
+
+        .shape-2 {
+            width: 180px;
+            height: 180px;
+            background: #f4e2bc;
+            bottom: 5%;
+            right: -75px;
+            animation-delay: -3s;
+        }
+
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            background: #f3bfcf;
+            top: 50%;
+            right: 8%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-18px) rotate(8deg);
+            }
+        }
+
+        .container {
+            width: min(92%, 650px);
+            margin: 0 auto;
+            padding: 25px 0 50px;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 40px 20px 30px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "♡";
+            position: absolute;
+            font-size: 260px;
+            color: rgba(255,255,255,0.45);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-family: serif;
+            z-index: -1;
+        }
+
+        .tiny-title {
+            color: var(--dorado);
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+        }
+
+        .baby-icon {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff, #fce7ed);
+            border: 2px solid var(--dorado-claro);
+            box-shadow: var(--sombra);
+            animation: pulse 2.5s infinite;
+        }
+
+        .baby-icon i {
+            font-size: 2.4rem;
+            color: var(--rosa-oscuro);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--rosa-oscuro);
+            font-size: clamp(3.8rem, 14vw, 6.5rem);
+            line-height: 0.9;
+            font-weight: 400;
+            text-shadow: 2px 4px 10px rgba(201, 119, 141, 0.12);
+        }
+
+        .hero .subtitle {
+            margin-top: 18px;
+            font-family: 'Playfair Display', serif;
+            color: #a98463;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .parents {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 11px 22px;
+            background: rgba(255,255,255,0.72);
+            border: 1px solid rgba(201,168,106,0.35);
+            border-radius: 50px;
+            font-size: 0.86rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+
+        .parents strong {
+            color: var(--rosa-oscuro);
+        }
+
+        /* Tarjetas */
+        .card {
+            background: rgba(255,255,255,0.88);
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 28px;
+            padding: 26px 20px;
+            margin: 22px 0;
+            box-shadow: var(--sombra);
+            backdrop-filter: blur(8px);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-heading .icon-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            background: #fff5f7;
+            color: var(--rosa-oscuro);
+            border: 1px solid #f7d5de;
+        }
+
+        .section-heading h2 {
+            font-family: 'Playfair Display', serif;
+            color: #98745a;
+            font-size: 1.5rem;
+        }
+
+        .section-heading p {
+            margin-top: 7px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        /* Cuenta regresiva */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .count-box {
+            background: linear-gradient(180deg, #fffafa, #fff4f6);
+            border: 1px solid #f6dce3;
+            border-radius: 18px;
+            padding: 15px 5px;
+            text-align: center;
+        }
+
+        .count-box span {
+            display: block;
+            color: var(--rosa-oscuro);
+            font-weight: 800;
+            font-size: clamp(1.4rem, 6vw, 2rem);
+        }
+
+        .count-box small {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.63rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9b7d86;
+        }
+
+        /* Fecha */
+        .event-info {
+            display: grid;
+            gap: 14px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px;
+            background: #fffaf8;
+            border-radius: 18px;
+            border: 1px solid #f5e6dc;
+        }
+
+        .info-icon {
+            min-width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fbe0e6, #fff3e5);
+            color: var(--rosa-oscuro);
+        }
+
+        .info-item strong {
+            display: block;
+            color: #876970;
+            font-size: 0.87rem;
+            margin-bottom: 4px;
+        }
+
+        .info-item span {
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* Botones */
+        .btn {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            border-radius: 16px;
+            padding: 16px 18px;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-map {
+            color: white;
+            background: linear-gradient(135deg, #d98b9f, #c9778d);
+            box-shadow: 0 10px 22px rgba(201, 119, 141, 0.25);
+        }
+
+        .btn-gift {
+            color: #856338;
+            background: linear-gradient(135deg, #f6e6bd, #e9cf91);
+            box-shadow: 0 10px 22px rgba(201, 168, 106, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Sección Yape */
+        .gift-card {
+            text-align: center;
+            background:
+                radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 45%),
+                linear-gradient(145deg, #fff9f1, #fff2f5);
+        }
+
+        .gift-card h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--rosa-oscuro);
+            font-size: 2.7rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .gift-card p {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            max-width: 450px;
+            margin: auto;
+        }
+
+        .yape-box {
+            margin: 22px auto 8px;
+            padding: 18px;
+            max-width: 390px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.88);
+            border: 1px dashed var(--dorado);
+        }
+
+        .yape-label {
+            font-size: 0.73rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--dorado);
+            font-weight: 800;
+        }
+
+        .yape-number {
+            margin-top: 8px;
+            font-size: clamp(1.6rem, 7vw, 2.1rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #80616a;
+        }
+
+        .copy-message {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #a8844f;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        /* Confirmación */
+        .confirmation {
+            text-align: center;
+            padding: 25px 18px;
+            background: linear-gradient(135deg, #f9dce3, #fff8ed);
+        }
+
+        .confirmation h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--rosa-oscuro);
+            font-size: 1.35rem;
+            margin-bottom: 8px;
+        }
+
+        .confirmation p {
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px 10px 5px;
+            color: #a68b92;
+            font-size: 0.75rem;
+        }
+
+        footer .heart {
+            color: var(--rosa-oscuro);
+            animation: heartbeat 1.4s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        /* Animación de entrada */
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: reveal 0.8s forwards;
+        }
+
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.6s; }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                width: 94%;
+                padding-top: 15px;
+            }
+
+            .hero {
+                padding: 30px 8px 22px;
+            }
+
+            .card {
+                padding: 22px 15px;
+                border-radius: 23px;
+            }
+
+            .countdown {
+                gap: 7px;
+            }
+
+            .count-box {
+                padding: 13px 3px;
+                border-radius: 14px;
+            }
+
+            .count-box small {
+                font-size: 0.55rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+
+    <main class="container">
+
+        <!-- ENCABEZADO -->
+        <section class="hero reveal">
+            <div class="baby-icon">
+                <i class="fa-solid fa-baby"></i>
+            </div>
+
+            <p class="tiny-title">Muy pronto llegará una hermosa princesa</p>
+
+            <h1>Adara Bela</h1>
+
+            <p class="subtitle">
+                Hay pequeños milagros que llegan para llenar<br>
+                el mundo de amor, ternura y felicidad.
+            </p>
+
+            <div class="parents">
+                Con mucho amor, <strong>Heiner y Loedir</strong> te invitan a celebrar
+            </div>
+        </section>
+
+        <!-- CUENTA REGRESIVA -->
+        <section class="card reveal delay-1">
+            <div class="section-heading">
+                <div class="icon-circle">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <h2>La cuenta regresiva</h2>
+                <p>Falta muy poquito para celebrar juntos.</p>
+            </div>
+
+            <div class="countdown" id="countdown">
+                <div class="count-box">
+                    <span id="days">00</span>
+                    <small>Días</small>
+                </div>
+                <div class="count-box">
+                    <span id="hours">00</span>
+                    <small>Horas</small>
+                </div>
+                <div class="count-box">
+                    <span id="minutes">00</span>
+                    <small>Minutos</small>
+                </div>
+                <div class="count-box">
+                    <span id="seconds">00</span>
+                    <small>Segundos</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- INFORMACIÓN DEL EVENTO -->
+        <section class="card reveal delay-2">
+            <div class="section-heading">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-calendar-heart"></i>
+                </div>
+                <h2>Reserva esta fecha</h2>
+                <p>Queremos compartir contigo este momento tan especial.</p>
+            </div>
+
+            <div class="event-info">
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div>
+                        <strong>Fecha</strong>
+                        <span>Domingo, 23 de Agosto de 2026</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <strong>Hora</strong>
+                        <span>6:00 PM</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <strong>Ubicación</strong>
+                        <span>Toca el botón para abrir la ubicación directamente en Google Maps.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <a
+                href="https://maps.app.goo.gl/GwmkPtPJNDyGUvKK7?g_st=iwb"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-map"
+            >
+                <i class="fa-solid fa-map-location-dot"></i>
+                Ver ubicación en Google Maps
+            </a>
+        </section>
+
+        <!-- REGALO / YAPE -->
+        <section class="card gift-card reveal delay-3">
+            <div class="section-heading">
+                <div class="icon-circle">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+            </div>
+
+            <h2>Un Cariñito para Adara</h2>
+
+            <p>
+                Tu presencia será el regalo más hermoso. Pero si deseas acompañarnos
+                con un pequeño detalle para nuestra princesa, puedes hacerlo con mucho amor.
+            </p>
+
+            <div class="yape-box">
+                <div class="yape-label">
+                    <i class="fa-solid fa-heart"></i> Yape
+                </div>
+
+                <div class="yape-number" id="yapeNumber">903051441</div>
+
+                <button class="btn btn-gift" id="copyYape" type="button">
+                    <i class="fa-regular fa-copy"></i>
+                    Copiar número de Yape
+                </button>
+
+                <div class="copy-message" id="copyMessage"></div>
+            </div>
+        </section>
+
+        <!-- MENSAJE FINAL -->
+        <section class="card confirmation reveal delay-4">
+            <div class="baby-icon" style="width:70px;height:70px;margin-bottom:15px;">
+                <i class="fa-solid fa-heart" style="font-size:1.8rem;"></i>
+            </div>
+
+            <h3>¡Tu presencia hará este día aún más especial!</h3>
+
+            <p>
+                Estamos muy felices de celebrar la próxima llegada de nuestra pequeña
+                <strong>Adara Bela</strong> junto a las personas que queremos.
+            </p>
+        </section>
+
+        <footer>
+            Hecho con mucho <span class="heart">♥</span> para celebrar la llegada de Adara Bela
+        </footer>
+
+    </main>
+
+    <script>
+        // ==========================================================
+        // CUENTA REGRESIVA
+        // Evento: Domingo 23 de agosto de 2026 - 6:00 PM
+        // Hora local de Perú: UTC-5
+        // ==========================================================
+        const eventDate = new Date("2026-08-23T18:00:00-05:00").getTime();
+        let celebrationLaunched = false;
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const daysEl = document.getElementById("days");
+            const hoursEl = document.getElementById("hours");
+            const minutesEl = document.getElementById("minutes");
+            const secondsEl = document.getElementById("seconds");
+
+            if (distance <= 0) {
+                daysEl.textContent = "00";
+                hoursEl.textContent = "00";
+                minutesEl.textContent = "00";
+                secondsEl.textContent = "00";
+
+                if (!celebrationLaunched) {
+                    celebrationLaunched = true;
+
+                    if (typeof confetti === "function") {
+                        confetti({
+                            particleCount: 150,
+                            spread: 100,
+                            origin: { y: 0.6 }
+                        });
+                    }
+                }
+
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+                (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor(
+                (distance % (1000 * 60)) / 1000
+            );
+
+            daysEl.textContent = String(days).padStart(2, "0");
+            hoursEl.textContent = String(hours).padStart(2, "0");
+            minutesEl.textContent = String(minutes).padStart(2, "0");
+            secondsEl.textContent = String(seconds).padStart(2, "0");
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+
+        // ==========================================================
+        // COPIAR NÚMERO DE YAPE
+        // ==========================================================
+        const copyButton = document.getElementById("copyYape");
+        const copyMessage = document.getElementById("copyMessage");
+        const yapeNumber = "903051441";
+
+        copyButton.addEventListener("click", async function () {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(yapeNumber);
+                } else {
+                    // Método alternativo para navegadores antiguos
+                    const textArea = document.createElement("textarea");
+                    textArea.value = yapeNumber;
+                    textArea.style.position = "fixed";
+                    textArea.style.left = "-999999px";
+                    textArea.style.top = "-999999px";
+
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+
+                    document.execCommand("copy");
+                    textArea.remove();
+                }
+
+                copyMessage.innerHTML =
+                    '<i class="fa-solid fa-circle-check"></i> ¡Número copiado correctamente!';
+
+                copyButton.innerHTML =
+                    '<i class="fa-solid fa-check"></i> ¡Número copiado!';
+
+                // Pequeña celebración
+                if (typeof confetti === "function") {
+                    const rect = copyButton.getBoundingClientRect();
+
+                    confetti({
+                        particleCount: 50,
+                        spread: 55,
+                        origin: {
+                            x: (rect.left + rect.width / 2) / window.innerWidth,
+                            y: (rect.top + rect.height / 2) / window.innerHeight
+                        }
+                    });
+                }
+
+                setTimeout(() => {
+                    copyButton.innerHTML =
+                        '<i class="fa-regular fa-copy"></i> Copiar número de Yape';
+                    copyMessage.textContent = "";
+                }, 3000);
+
+            } catch (error) {
+                copyMessage.textContent =
+                    "No se pudo copiar automáticamente. Número: " + yapeNumber;
+            }
+        });
+
+
+        // ==========================================================
+        // CONFETI DE BIENVENIDA SUAVE
+        // ==========================================================
+        window.addEventListener("load", function () {
+            setTimeout(() => {
+                if (typeof confetti === "function") {
+                    confetti({
+                        particleCount: 35,
+                        angle: 60,
+                        spread: 50,
+                        origin: { x: 0 }
+                    });
+
+                    confetti({
+                        particleCount: 35,
+                        angle: 120,
+                        spread: 50,
+                        origin: { x: 1 }
+                    });
+                }
+            }, 900);
+        });
+    </script>
+
+</body>
+</html>
