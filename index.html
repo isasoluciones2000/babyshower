@@ -55,7 +55,7 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA ===== */
+        /* ===== REPRODUCTOR DE MÚSICA (visible y funcional) ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
@@ -559,10 +559,10 @@
     <!-- CANVAS burbujas de fondo -->
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
+    <!-- ===== REPRODUCTOR DE MÚSICA (AUTOMÁTICO Y CONFIABLE) ===== -->
     <div id="musicPlayer">
         <i class="fa-solid fa-music"></i>
-        <span class="status" id="musicStatus">🎵 Canción de cuna</span>
+        <span class="status" id="musicStatus">🎵 Cargando...</span>
         <button id="toggleMusic" title="Pausar/Reanudar música">
             <i class="fa-solid fa-pause" id="musicIcon"></i>
         </button>
@@ -675,7 +675,7 @@
 
 <script>
     // ============================================================
-    // 0. REPRODUCTOR DE MÚSICA (Audio nativo)
+    // 0. REPRODUCTOR DE MÚSICA (Audio nativo con autoplay mejorado)
     // ============================================================
     const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
     audio.loop = true;
@@ -688,22 +688,32 @@
 
     let isPlaying = false;
 
-    // Función para iniciar/reanudar
+    // Función para iniciar la reproducción
     function playMusic() {
         audio.play().then(() => {
             isPlaying = true;
             musicIcon.className = 'fa-solid fa-pause';
             musicStatus.textContent = '🎵 Canción de cuna';
-        }).catch(() => {
-            // Si falla el autoplay, mostramos mensaje para que el usuario toque
+        }).catch((error) => {
+            console.log('Autoplay bloqueado, esperando interacción del usuario.');
             musicStatus.textContent = '🔇 Toca para reproducir';
             musicIcon.className = 'fa-solid fa-play';
             isPlaying = false;
         });
     }
 
-    // Intentar autoplay al cargar
-    setTimeout(playMusic, 500);
+    // Intentar autoplay al cargar la página (después de que el usuario interactúe)
+    document.addEventListener('click', function firstInteraction() {
+        if (!isPlaying) {
+            playMusic();
+        }
+        document.removeEventListener('click', firstInteraction);
+    }, { once: true });
+
+    // También intentar al cargar la página
+    window.addEventListener('load', function() {
+        setTimeout(playMusic, 1000);
+    });
 
     // Toggle play/pause
     toggleBtn.addEventListener('click', () => {
@@ -722,11 +732,18 @@
         audio.volume = parseFloat(e.target.value);
     });
 
-    // Si el audio se detiene por error, reintentar
+    // Manejar errores de audio
     audio.addEventListener('error', () => {
-        musicStatus.textContent = '🔇 Toca para reproducir';
+        musicStatus.textContent = '🔇 Error al cargar';
         musicIcon.className = 'fa-solid fa-play';
         isPlaying = false;
+    });
+
+    // Cuando el audio termina (por si acaso)
+    audio.addEventListener('ended', () => {
+        if (isPlaying) {
+            audio.play().catch(() => {});
+        }
     });
 
     // ============================================================
