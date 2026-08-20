@@ -676,7 +676,43 @@
 
     <script>
         // ============================================================
-        // 0. REPRODUCTOR DE MÚSICA (YouTube)
+        // 0. CONTADOR DE VISITAS (FUNCIONAL)
+        // ============================================================
+        async function updateVisitCounter() {
+            const visitCountEl = document.getElementById('visitCount');
+            
+            try {
+                // Usamos una API gratuita y confiable para contar visitas
+                // Esta API incrementa el contador cada vez que se llama
+                const response = await fetch('https://api.countapi.xyz/hit/adara_babyshower_2026/visits');
+                const data = await response.json();
+                
+                if (data && data.value) {
+                    visitCountEl.textContent = data.value;
+                    // Guardamos el valor en localStorage como respaldo
+                    localStorage.setItem('adara_visits_backup', data.value);
+                } else {
+                    // Fallback: usar localStorage
+                    useLocalStorageFallback(visitCountEl);
+                }
+            } catch (error) {
+                console.log('Error con API de conteo, usando localStorage:', error);
+                useLocalStorageFallback(visitCountEl);
+            }
+        }
+
+        function useLocalStorageFallback(visitCountEl) {
+            let count = parseInt(localStorage.getItem('adara_visits_counter')) || 0;
+            count += 1;
+            localStorage.setItem('adara_visits_counter', count);
+            visitCountEl.textContent = count;
+        }
+
+        // Ejecutar el contador al cargar la página
+        updateVisitCounter();
+
+        // ============================================================
+        // 1. REPRODUCTOR DE MÚSICA (YouTube)
         // ============================================================
         const ytPlayer = document.getElementById('ytPlayer');
         const toggleBtn = document.getElementById('toggleMusic');
@@ -685,17 +721,13 @@
         const volumeSlider = document.getElementById('volumeSlider');
 
         let isPlaying = false;
-        let playerReady = false;
 
-        // Función para controlar el reproductor de YouTube
         function controlYoutube(action) {
             try {
-                // Usamos la API de YouTube para controlar el iframe
                 const iframe = ytPlayer;
                 const src = iframe.src;
                 
                 if (action === 'play') {
-                    // Recargamos el iframe con autoplay activado
                     const baseSrc = src.split('?')[0];
                     const params = new URLSearchParams(src.split('?')[1] || '');
                     params.set('autoplay', '1');
@@ -706,7 +738,6 @@
                     musicStatus.textContent = '● Reproduciendo';
                     musicStatus.style.color = '#27c93f';
                 } else if (action === 'pause') {
-                    // Para pausar, recargamos sin autoplay
                     const baseSrc = src.split('?')[0];
                     const params = new URLSearchParams(src.split('?')[1] || '');
                     params.set('autoplay', '0');
@@ -722,7 +753,6 @@
             }
         }
 
-        // Toggle play/pause
         toggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (isPlaying) {
@@ -732,11 +762,9 @@
             }
         });
 
-        // Control de volumen (se aplica al iframe)
         volumeSlider.addEventListener('input', function(e) {
             const vol = parseInt(e.target.value);
             try {
-                // Intentamos enviar el volumen al iframe
                 const iframe = ytPlayer;
                 const src = iframe.src;
                 const baseSrc = src.split('?')[0];
@@ -748,32 +776,12 @@
             }
         });
 
-        // Iniciar con un clic en cualquier parte (para cumplir políticas de autoplay)
         document.addEventListener('click', function firstInteraction() {
             if (!isPlaying) {
                 controlYoutube('play');
             }
             document.removeEventListener('click', firstInteraction);
         }, { once: true });
-
-        // También podemos iniciar con el botón
-        // ============================================================
-
-        // ============================================================
-        // 1. CONTADOR DE VISITAS
-        // ============================================================
-        async function fetchGlobalVisits() {
-            try {
-                const response = await fetch('https://api.counterapi.dev/v1/adara_babyshower_cusco_2026/visits/up');
-                const data = await response.json();
-                document.getElementById('visitCount').textContent = data.count || 1;
-            } catch (e) {
-                let count = parseInt(localStorage.getItem('adara_visits_fallback')) || 1;
-                document.getElementById('visitCount').textContent = count;
-                localStorage.setItem('adara_visits_fallback', count + 1);
-            }
-        }
-        fetchGlobalVisits();
 
         // ============================================================
         // 2. ESTRELLITAS AL TOCAR
