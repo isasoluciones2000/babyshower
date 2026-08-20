@@ -50,72 +50,94 @@
             pointer-events: none;
         }
 
-        /* ===== REPRODUCTOR DE MÚSICA ===== */
+        /* ===== NUEVO REPRODUCTOR DE MÚSICA (estilo disco de vinilo) ===== */
         #musicPlayer {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 999;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
-            border-radius: 60px;
-            padding: 12px 20px;
-            box-shadow: 0 8px 32px rgba(201, 119, 141, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 10px 18px;
+            box-shadow: 0 8px 32px rgba(201, 119, 141, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             transition: all 0.3s ease;
-            min-width: 200px;
         }
         #musicPlayer:hover {
-            transform: scale(1.04);
-            box-shadow: 0 12px 40px rgba(201, 119, 141, 0.35);
+            transform: scale(1.03);
+            box-shadow: 0 12px 40px rgba(201, 119, 141, 0.3);
         }
 
-        #musicPlayer .music-icon {
-            font-size: 1.4rem;
-            color: var(--rosa-oscuro);
-            animation: spinMusic 4s linear infinite;
+        #musicPlayer .disc {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 35%, #555, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            animation: spinDisc 3s linear infinite;
+            animation-play-state: running;
         }
-        @keyframes spinMusic {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        #musicPlayer .disc.paused {
+            animation-play-state: paused;
+        }
+        @keyframes spinDisc {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #musicPlayer .disc .center {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #fff, #ccc);
+            border: 2px solid #999;
+        }
+        #musicPlayer .disc i {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.6rem;
         }
 
-        #musicPlayer .music-info {
+        #musicPlayer .info {
             display: flex;
             flex-direction: column;
             line-height: 1.2;
-            min-width: 80px;
+            min-width: 70px;
         }
-        #musicPlayer .music-title {
+        #musicPlayer .info .title {
             font-weight: 700;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--texto);
         }
-        #musicPlayer .music-status {
-            font-size: 0.6rem;
+        #musicPlayer .info .artist {
+            font-size: 0.55rem;
             color: #a8848d;
+        }
+        #musicPlayer .info .status {
+            font-size: 0.55rem;
+            color: #27c93f;
             font-weight: 600;
         }
 
         #musicPlayer .controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         #musicPlayer .controls button {
             background: none;
             border: none;
             cursor: pointer;
             color: var(--rosa-oscuro);
-            font-size: 1.2rem;
-            padding: 6px 10px;
+            font-size: 1rem;
+            padding: 5px 8px;
             border-radius: 30px;
             transition: 0.2s;
             display: flex;
@@ -123,46 +145,45 @@
             justify-content: center;
         }
         #musicPlayer .controls button:hover {
-            background: rgba(201, 119, 141, 0.15);
+            background: rgba(201, 119, 141, 0.12);
         }
         #musicPlayer .controls button:active {
             transform: scale(0.9);
         }
 
-        #musicPlayer .volume-wrapper {
+        #musicPlayer .volume-wrap {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
-        #musicPlayer .volume-wrapper i {
-            font-size: 0.8rem;
+        #musicPlayer .volume-wrap i {
+            font-size: 0.7rem;
             color: var(--rosa-oscuro);
-            opacity: 0.6;
+            opacity: 0.5;
         }
         #musicPlayer input[type="range"] {
-            width: 50px;
-            height: 4px;
+            width: 40px;
+            height: 3px;
             -webkit-appearance: none;
             appearance: none;
             background: var(--rosa);
-            border-radius: 4px;
+            border-radius: 3px;
             outline: none;
-            transition: 0.2s;
         }
         #musicPlayer input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: var(--rosa-oscuro);
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
         #musicPlayer input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: var(--rosa-oscuro);
             border-radius: 50%;
             cursor: pointer;
@@ -173,27 +194,31 @@
             #musicPlayer {
                 bottom: 10px;
                 right: 10px;
-                padding: 10px 14px;
-                gap: 10px;
+                padding: 8px 12px;
+                gap: 8px;
                 border-radius: 40px;
                 flex-wrap: wrap;
-                min-width: 160px;
             }
-            #musicPlayer input[type="range"] {
-                width: 35px;
+            #musicPlayer .disc {
+                width: 30px;
+                height: 30px;
             }
-            #musicPlayer .music-icon {
-                font-size: 1rem;
+            #musicPlayer .disc .center {
+                width: 8px;
+                height: 8px;
             }
-            #musicPlayer .music-title {
-                font-size: 0.65rem;
+            #musicPlayer .info .title {
+                font-size: 0.6rem;
             }
             #musicPlayer .controls button {
-                font-size: 1rem;
-                padding: 4px 8px;
+                font-size: 0.85rem;
+                padding: 4px 6px;
             }
-            #musicPlayer .music-info {
-                min-width: 60px;
+            #musicPlayer input[type="range"] {
+                width: 30px;
+            }
+            #musicPlayer .info {
+                min-width: 50px;
             }
         }
 
@@ -234,13 +259,8 @@
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.4;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .hero {
@@ -269,12 +289,8 @@
             animation: glowA 2.5s ease-in-out infinite alternate;
         }
         @keyframes glowA {
-            0% {
-                filter: drop-shadow(0 4px 12px rgba(201, 119, 141, 0.3));
-            }
-            100% {
-                filter: drop-shadow(0 8px 30px rgba(201, 119, 141, 0.7));
-            }
+            0% { filter: drop-shadow(0 4px 12px rgba(201, 119, 141, 0.3)); }
+            100% { filter: drop-shadow(0 8px 30px rgba(201, 119, 141, 0.7)); }
         }
 
         .baby-icon {
@@ -291,13 +307,8 @@
             animation: floatIcon 3s ease-in-out infinite;
         }
         @keyframes floatIcon {
-            0%,
-            100% {
-                transform: translateY(0) rotate(-2deg);
-            }
-            50% {
-                transform: translateY(-8px) rotate(2deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
         }
         .baby-icon i {
             font-size: 2.2rem;
@@ -458,7 +469,6 @@
             background: linear-gradient(145deg, #f6e6bd, #e9cf91);
         }
 
-        /* ===== SECCIÓN YAPE (sin mesa de regalos) ===== */
         .yape-section {
             text-align: center;
             padding: 10px 0;
@@ -528,13 +538,8 @@
             animation: heartbeat 1.5s infinite;
         }
         @keyframes heartbeat {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.3);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         .reveal {
@@ -542,20 +547,11 @@
             transform: translateY(18px);
             animation: reveal 0.6s forwards;
         }
-        .delay-1 {
-            animation-delay: 0.1s;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
         @keyframes reveal {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         #starCanvas {
@@ -583,18 +579,21 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="bubbleCanvas"></canvas>
 
-    <!-- ===== REPRODUCTOR DE MÚSICA ===== -->
+    <!-- ===== NUEVO REPRODUCTOR DE MÚSICA (estilo disco de vinilo) ===== -->
     <div id="musicPlayer">
-        <i class="fa-solid fa-music music-icon"></i>
-        <div class="music-info">
-            <span class="music-title">🎵 Canción de cuna</span>
-            <span class="music-status" id="musicStatus">🎵 Reproduciendo...</span>
+        <div class="disc" id="disc">
+            <div class="center"></div>
+        </div>
+        <div class="info">
+            <span class="title">🎵 Dulce Sueño</span>
+            <span class="artist">Canción de cuna</span>
+            <span class="status" id="musicStatus">● Reproduciendo</span>
         </div>
         <div class="controls">
             <button id="toggleMusic" title="Pausar/Reanudar">
                 <i class="fa-solid fa-pause" id="musicIcon"></i>
             </button>
-            <div class="volume-wrapper">
+            <div class="volume-wrap">
                 <i class="fa-solid fa-volume-low"></i>
                 <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
             </div>
@@ -660,7 +659,7 @@
             </a>
         </section>
 
-        <!-- ===== SOLO YAPE (sin mesa de regalos) ===== -->
+        <!-- ===== YAPE ===== -->
         <section class="card yape-section reveal delay-3">
             <div class="icon-circle"><i class="fa-solid fa-heart"></i></div>
             <h2>Un Cariñito para Adara</h2>
@@ -685,13 +684,15 @@
 
     <script>
         // ============================================================
-        // 0. REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
+        // 0. NUEVO REPRODUCTOR DE MÚSICA (Canción de cuna instrumental)
         // ============================================================
+        // Usamos una canción de cuna clásica (Brahms Lullaby) en MP3
         const audioSrc = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3?v=' + Date.now();
         const audio = new Audio(audioSrc);
         audio.loop = true;
         audio.volume = 0.7;
 
+        const disc = document.getElementById('disc');
         const toggleBtn = document.getElementById('toggleMusic');
         const musicIcon = document.getElementById('musicIcon');
         const musicStatus = document.getElementById('musicStatus');
@@ -703,11 +704,13 @@
             audio.play().then(() => {
                 isPlaying = true;
                 musicIcon.className = 'fa-solid fa-pause';
-                musicStatus.textContent = '🎵 Reproduciendo...';
+                musicStatus.textContent = '● Reproduciendo';
+                disc.classList.remove('paused');
             }).catch(() => {
-                musicStatus.textContent = '🔇 Toca para reproducir';
+                musicStatus.textContent = '⏸ Toca para iniciar';
                 musicIcon.className = 'fa-solid fa-play';
                 isPlaying = false;
+                disc.classList.add('paused');
             });
         }
 
@@ -728,7 +731,8 @@
                 audio.pause();
                 isPlaying = false;
                 musicIcon.className = 'fa-solid fa-play';
-                musicStatus.textContent = '⏸️ Pausado';
+                musicStatus.textContent = '⏸ Pausado';
+                disc.classList.add('paused');
             } else {
                 playMusic();
             }
@@ -739,9 +743,10 @@
         });
 
         audio.addEventListener('error', function() {
-            musicStatus.textContent = '🔇 Error al cargar';
+            musicStatus.textContent = '⏸ Error al cargar';
             musicIcon.className = 'fa-solid fa-play';
             isPlaying = false;
+            disc.classList.add('paused');
         });
 
         audio.addEventListener('ended', function() {
